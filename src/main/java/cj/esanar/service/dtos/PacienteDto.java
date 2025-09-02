@@ -24,6 +24,6 @@ public class PacienteDto {
     private String ocupacion;
     private String entidad;
     private String estadoCivil;
-    private HistoriaEntity historiaEntity;
+    private HistoriaDto historiaEntity;
 
 }
