@@ -1,6 +1,6 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.persistence.entity.UserEntity;
+import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.persistence.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

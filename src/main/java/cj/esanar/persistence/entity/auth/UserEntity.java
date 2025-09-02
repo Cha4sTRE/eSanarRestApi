@@ -1,4 +1,4 @@
-package cj.esanar.persistence.entity;
+package cj.esanar.persistence.entity.auth;
 
 import jakarta.persistence.*;
 import lombok.*;

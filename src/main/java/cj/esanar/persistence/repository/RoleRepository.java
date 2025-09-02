@@ -1,9 +1,8 @@
 package cj.esanar.persistence.repository;
 
-import cj.esanar.persistence.entity.ERole;
-import cj.esanar.persistence.entity.RoleEntity;
+import cj.esanar.persistence.entity.auth.ERole;
+import cj.esanar.persistence.entity.auth.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

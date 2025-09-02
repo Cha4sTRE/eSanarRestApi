@@ -1,6 +1,6 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.persistence.entity.UserEntity;
+import cj.esanar.persistence.entity.auth.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

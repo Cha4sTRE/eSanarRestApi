@@ -2,7 +2,7 @@ package cj.esanar.controller;
 
 import cj.esanar.persistence.entity.ConsultaEntity;
 import cj.esanar.persistence.entity.HistoriaEntity;
-import cj.esanar.persistence.entity.UserEntity;
+import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.service.ConsultaService;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.implement.CustomUserDetailsService;
@@ -19,7 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
 
 @AllArgsConstructor
 

@@ -1,12 +1,10 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.persistence.entity.PermissionsEntity;
+import cj.esanar.persistence.entity.auth.PermissionsEntity;
 import cj.esanar.persistence.repository.PermissionsRepository;
 import cj.esanar.service.PermissionsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 
 @Service

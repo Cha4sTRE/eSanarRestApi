@@ -1,6 +1,6 @@
 package cj.esanar.persistence.repository;
 
-import cj.esanar.persistence.entity.PermissionsEntity;
+import cj.esanar.persistence.entity.auth.PermissionsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

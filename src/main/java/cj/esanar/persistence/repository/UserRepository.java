@@ -1,7 +1,7 @@
 package cj.esanar.persistence.repository;
 
 
-import cj.esanar.persistence.entity.UserEntity;
+import cj.esanar.persistence.entity.auth.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,6 @@
 package cj.esanar.service;
 
-import cj.esanar.persistence.entity.PermissionsEntity;
-
-import java.security.Permissions;
-import java.util.Set;
+import cj.esanar.persistence.entity.auth.PermissionsEntity;
 
 public interface PermissionsService {
 

@@ -1,6 +1,9 @@
 package cj.esanar.config;
 
-import cj.esanar.persistence.entity.*;
+import cj.esanar.persistence.entity.auth.ERole;
+import cj.esanar.persistence.entity.auth.PermissionsEntity;
+import cj.esanar.persistence.entity.auth.RoleEntity;
+import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.persistence.repository.RoleRepository;
 import cj.esanar.persistence.repository.UserRepository;
 import cj.esanar.service.ConsultaService;
@@ -9,12 +12,7 @@ import cj.esanar.service.PacienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
