@@ -1,0 +1,10 @@
+services:
+  database:
+    container_name: enf-db
+    image: postgres
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=enfsanar
+      - POSTGRES_PASSWORD=enf123
+      - POSTGRES_DB=enf_sanar

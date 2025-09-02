@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ESanarApplication {
+public class ESanarRestApiApplication {
 
-    public static void main(String[] args) {SpringApplication.run(ESanarApplication.class, args);}
+    public static void main(String[] args) {SpringApplication.run(ESanarRestApiApplication.class, args);}
 
 }

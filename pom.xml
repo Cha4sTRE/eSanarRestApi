@@ -11,21 +11,8 @@
     <groupId>cj</groupId>
     <artifactId>eSanar</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>eSanar</name>
+    <name>eSanarRestApi</name>
     <description>eSanar</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
     <properties>
         <java.version>21</java.version>
     </properties>
@@ -104,7 +91,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -125,7 +112,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>cj.esanar.ESanarApplication</mainClass>
+                    <mainClass>cj.esanar.ESanarRestApiApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>
@@ -137,6 +124,6 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
 </project>

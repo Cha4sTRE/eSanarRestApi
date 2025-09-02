@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: eSanarRestApi
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: enfsanar
+    password: enf123
+    url: jdbc:postgresql://localhost:5433/enf_sanar
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create
+
