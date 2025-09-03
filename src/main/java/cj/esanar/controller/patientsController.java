@@ -67,29 +67,7 @@ public class EnfController {
         patientServiceImpl.deletePatients(paciente);
         return "redirect:/enf/";
     }
-
-    @PostMapping("paciente/guardar")
-    public String guardar(@Valid PacienteEntity paciente, @RequestParam(value = "idHistoria",required = false) Long idHistoria,@RequestParam String fechaNacimiento, Errors errors) {
-        if (errors.hasErrors()) {
-            return "enf/paciente-form";
-        }
-        LocalDate dateNacimiento= LocalDate.parse(fechaNacimiento);
-        LocalDate hoy=LocalDate.now();
-        paciente.setFechaNacimiento(dateNacimiento);
-        if (paciente.getId() == null) {
-            // CASO NUEVO
-            HistoriaEntity historiaNueva= new HistoriaEntity(null, hoy, paciente, Collections.emptySet());
-            historiaNueva.setPaciente(paciente);
-            paciente.setHistoriaEntity(historiaNueva);
-        } else {
-            // CASO EDICIÓN
-            HistoriaEntity historiaExistente = historyServiceImpl.findHistoryById(idHistoria);
-            paciente.setHistoriaEntity(historiaExistente);
-        }
-        patientServiceImpl.savePatients(paciente);
-
-        return "redirect:/enf/";
-    }
+    
 
     @GetMapping("paciente/ExportarExcel")
     public void exportarExcel(HttpServletResponse response) throws IOException {
