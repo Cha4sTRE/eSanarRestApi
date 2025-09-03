@@ -25,49 +25,24 @@ import java.util.*;
 public class AdminController {
 
 
-    private UserDetailServiceImpl userDetailService;
     private RoleRepository roleRepository;
     private PermissionsRepository permissionsRepository;
 
     @GetMapping("/")
-    public String dashboar(Model model) {
-        Authentication auth= SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetailsService usuarioAuth= (CustomUserDetailsService) auth.getPrincipal();
-        List<UserEntity> users= userDetailService.getAllUsers();
-        model.addAttribute("usuarioAuth", usuarioAuth);
-        model.addAttribute("users", users);
-        model.addAttribute("listaRoles", roleRepository.findAll());
+    public String dashboar() {
 
-        return "admin/dashboard";
-    }
-    @ModelAttribute("usuario")
-    public UserEntity usuario() {
-        return new UserEntity();
-    }
-
-    @GetMapping("/nuevoRegistro")
-    public String nuevoRegistro(Model model) {
-        model.addAttribute("listaRoles", roleRepository.findAll());
-        return "admin/registro";
+        return "endpoint principal";
     }
 
 
-    @PostMapping("/guardarRegistro")
-    public String guardarRegistro(@Valid @ModelAttribute("usuario") UserEntity usuario, Errors errors){
-        if(errors.hasErrors()){
-            System.out.println("Errores en la validación: " + errors.getAllErrors());
-            return "admin/registro";
-        }
-
-        usuario.setEnabled(true);
-        usuario.setAccountNonLocked(true);
-        usuario.setAccountNonExpired(true);
-        usuario.setCredentialsNonExpired(true);
-
-
-        userDetailService.saveUser(usuario);
-        return "redirect:/admin/";
+    @PostMapping("/addUser")
+    public String newUser(@RequestBody UserEntity user) {
+        return "endpoint nuevo usuario";
     }
+
+    /*
+    este endpoint era para cambiar la propiedad isEnable de Spring security de
+    la entidad User a false o true segun se quiera. o sea, deshabilitar el Usuario
 
     @PostMapping("/isEnable")
     @ResponseBody
@@ -79,10 +54,8 @@ public class AdminController {
             userDetailService.saveUser(user);
             return "Usuario actualizado con éxito.";
         }
-
-
         return "Error: usuario no encontrado.";
-    }
+    }*/
 
 
 

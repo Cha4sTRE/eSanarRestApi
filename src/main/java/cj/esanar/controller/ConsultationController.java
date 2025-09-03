@@ -4,7 +4,7 @@ import cj.esanar.persistence.entity.ConsultaEntity;
 import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.service.ConsultationService;
-import cj.esanar.service.HistoriaService;
+import cj.esanar.service.HistoryService;
 import cj.esanar.service.implement.security.CustomUserDetailsService;
 import cj.esanar.service.implement.security.UserDetailServiceImpl;
 import cj.esanar.util.pagination.PageRender;
@@ -31,12 +31,12 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("/consulta")
+@RequestMapping("/consult")
 @PreAuthorize("hasAnyRole('ENF','ADMIN','MEDIC')")
-public class ConsultaController {
+public class ConsultationController {
 
-    private final ConsultationService consultaService;
-    private final HistoriaService historiaService;
+    private final ConsultationService consultationService;
+    private final HistoryService historyService;
     private final UserDetailServiceImpl userDetailService;
 
 
@@ -46,13 +46,13 @@ public class ConsultaController {
 
 
         DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        HistoriaEntity consultasHistoria= historiaService.findHistoryById(historia.getId());
+        HistoriaEntity consultasHistoria= historyService.findHistoryById(historia.getId());
         Pageable pageable = PageRequest.of(page, 6, Sort.by("id").ascending());
         Page<ConsultaEntity> consultaPage;
         if (filtro == null || filtro.isBlank() || filtro.equals("all")) {
-            consultaPage = consultaService.listConsultations(pageable, consultasHistoria.getId());
+            consultaPage = consultationService.listConsultations(pageable, consultasHistoria.getId());
         } else {
-            consultaPage = consultaService.listConsultations(pageable, consultasHistoria.getId(), filtro);
+            consultaPage = consultationService.listConsultations(pageable, consultasHistoria.getId(), filtro);
         }
 
         PageRender<ConsultaEntity> consultaRender= new PageRender<>("/consulta/historias/"+nombre+"?id="+historia.getId(),consultaPage);
@@ -68,7 +68,7 @@ public class ConsultaController {
         DateTimeFormatter horaFormat= DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
 
         model.addAttribute("consulta", consulta);
-        model.addAttribute("historiaPaciente",historiaService.findHistoryById(historiaId.getId()));
+        model.addAttribute("historiaPaciente", historyService.findHistoryById(historiaId.getId()));
         model.addAttribute("hora", ahora.format(horaFormat));
         return "consulta/consulta-form";
     }
@@ -76,8 +76,8 @@ public class ConsultaController {
     @GetMapping("/historia/{historiaId}")
     public String verConsulta(@PathVariable HistoriaEntity historiaId,@RequestParam ConsultaEntity consulta, Model model) {
 
-        ConsultaEntity editConsulta= consultaService.findConsultationtById(consulta);
-        HistoriaEntity editHistoria= historiaService.findHistoryById(historiaId.getId());
+        ConsultaEntity editConsulta= consultationService.findConsultationtById(consulta);
+        HistoriaEntity editHistoria= historyService.findHistoryById(historiaId.getId());
         LocalDateTime fechaHoraAtencion= editConsulta.getFechaHoraAtencion();
 
         return "consulta/consulta-form";
@@ -93,7 +93,7 @@ public class ConsultaController {
        String cabecera= "Content-Disposition";
        String valor="attachment; filename=Consulta_"+fecha+".pdf";
        response.setHeader(cabecera,valor);
-       ConsultaEntity consultapdf= consultaService.findConsultationtById(consulta);
+       ConsultaEntity consultapdf= consultationService.findConsultationtById(consulta);
        ExportarConsultaPdf exportar= new ExportarConsultaPdf(consultapdf);
        exportar.export(response);
     }
@@ -112,11 +112,11 @@ public class ConsultaController {
         consulta.setFechaHoraAtencion(fechaHora);
         consulta.setHoraFinal(LocalTime.now());
 
-        HistoriaEntity hPaciente= historiaService.findHistoryById(idHistoria);
+        HistoriaEntity hPaciente= historyService.findHistoryById(idHistoria);
         consulta.setHistoriaClinica(hPaciente);
         hPaciente.agregarConsultas(consulta);
 
-        consultaService.findConsultationtById(consulta);
+        consultationService.findConsultationtById(consulta);
         return "redirect:/consulta/historias/"+hPaciente.getPaciente().getNombre()+"?"+"id="+hPaciente.getId();
     }
 
