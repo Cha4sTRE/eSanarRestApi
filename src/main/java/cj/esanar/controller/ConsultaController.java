@@ -3,10 +3,10 @@ package cj.esanar.controller;
 import cj.esanar.persistence.entity.ConsultaEntity;
 import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.auth.UserEntity;
-import cj.esanar.service.ConsultaService;
+import cj.esanar.service.ConsultationService;
 import cj.esanar.service.HistoriaService;
-import cj.esanar.service.implement.CustomUserDetailsService;
-import cj.esanar.service.implement.UserDetailServiceImpl;
+import cj.esanar.service.implement.security.CustomUserDetailsService;
+import cj.esanar.service.implement.security.UserDetailServiceImpl;
 import cj.esanar.util.pagination.PageRender;
 import cj.esanar.util.reports.ExportarConsultaPdf;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,7 +35,7 @@ import java.time.format.DateTimeFormatter;
 @PreAuthorize("hasAnyRole('ENF','ADMIN','MEDIC')")
 public class ConsultaController {
 
-    private final ConsultaService consultaService;
+    private final ConsultationService consultaService;
     private final HistoriaService historiaService;
     private final UserDetailServiceImpl userDetailService;
 
@@ -46,23 +46,17 @@ public class ConsultaController {
 
 
         DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        HistoriaEntity consultasHistoria= historiaService.buscaHistoria(historia.getId());
+        HistoriaEntity consultasHistoria= historiaService.findHistoryById(historia.getId());
         Pageable pageable = PageRequest.of(page, 6, Sort.by("id").ascending());
         Page<ConsultaEntity> consultaPage;
         if (filtro == null || filtro.isBlank() || filtro.equals("all")) {
-            consultaPage = consultaService.listaConsultas(pageable, consultasHistoria.getId());
+            consultaPage = consultaService.listConsultations(pageable, consultasHistoria.getId());
         } else {
-            consultaPage = consultaService.listaConsultas(pageable, consultasHistoria.getId(), filtro);
+            consultaPage = consultaService.listConsultations(pageable, consultasHistoria.getId(), filtro);
         }
 
         PageRender<ConsultaEntity> consultaRender= new PageRender<>("/consulta/historias/"+nombre+"?id="+historia.getId(),consultaPage);
 
-
-        model.addAttribute("historia",consultasHistoria);
-        model.addAttribute("consultas", consultaPage);
-        model.addAttribute("page",consultaRender);
-        model.addAttribute("pacienteNombre", nombre);
-        model.addAttribute("formatoHora", formato);
         return "consulta/historias";
     }
 
@@ -74,22 +68,17 @@ public class ConsultaController {
         DateTimeFormatter horaFormat= DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
 
         model.addAttribute("consulta", consulta);
-        model.addAttribute("historiaPaciente",historiaService.buscaHistoria(historiaId.getId()));
+        model.addAttribute("historiaPaciente",historiaService.findHistoryById(historiaId.getId()));
         model.addAttribute("hora", ahora.format(horaFormat));
         return "consulta/consulta-form";
-
     }
 
     @GetMapping("/historia/{historiaId}")
     public String verConsulta(@PathVariable HistoriaEntity historiaId,@RequestParam ConsultaEntity consulta, Model model) {
 
-        ConsultaEntity editConsulta= consultaService.consultaPorId(consulta);
-        HistoriaEntity editHistoria= historiaService.buscaHistoria(historiaId.getId());
+        ConsultaEntity editConsulta= consultaService.findConsultationtById(consulta);
+        HistoriaEntity editHistoria= historiaService.findHistoryById(historiaId.getId());
         LocalDateTime fechaHoraAtencion= editConsulta.getFechaHoraAtencion();
-
-        model.addAttribute("consulta", editConsulta);
-        model.addAttribute("historiaPaciente", editHistoria);
-        model.addAttribute("hora", fechaHoraAtencion);
 
         return "consulta/consulta-form";
     }
@@ -104,7 +93,7 @@ public class ConsultaController {
        String cabecera= "Content-Disposition";
        String valor="attachment; filename=Consulta_"+fecha+".pdf";
        response.setHeader(cabecera,valor);
-       ConsultaEntity consultapdf= consultaService.consultaPorId(consulta);
+       ConsultaEntity consultapdf= consultaService.findConsultationtById(consulta);
        ExportarConsultaPdf exportar= new ExportarConsultaPdf(consultapdf);
        exportar.export(response);
     }
@@ -123,11 +112,11 @@ public class ConsultaController {
         consulta.setFechaHoraAtencion(fechaHora);
         consulta.setHoraFinal(LocalTime.now());
 
-        HistoriaEntity hPaciente= historiaService.buscaHistoria(idHistoria);
+        HistoriaEntity hPaciente= historiaService.findHistoryById(idHistoria);
         consulta.setHistoriaClinica(hPaciente);
         hPaciente.agregarConsultas(consulta);
 
-        consultaService.guardarConsulta(consulta);
+        consultaService.findConsultationtById(consulta);
         return "redirect:/consulta/historias/"+hPaciente.getPaciente().getNombre()+"?"+"id="+hPaciente.getId();
     }
 

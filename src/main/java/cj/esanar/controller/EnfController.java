@@ -5,7 +5,7 @@ import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.PacienteService;
-import cj.esanar.service.implement.CustomUserDetailsService;
+import cj.esanar.service.implement.security.CustomUserDetailsService;
 import cj.esanar.util.pagination.PageRender;
 import cj.esanar.util.reports.ExportarPacientesExel;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +19,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +46,7 @@ public class EnfController {
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by("id").ascending());
         Page<PacienteEntity> pacientes;
-        pacientes= (filtro.equals("all") ? pacienteServiceImpl.listaPacientes(pageable): pacienteServiceImpl.listaPacientes(pageable,filtro));
+        pacientes= (filtro.equals("all") ? pacienteServiceImpl.listPatients(pageable): pacienteServiceImpl.listPatients(pageable,filtro));
         PageRender<PacienteEntity> pacientesRender= new PageRender<>("/enf/",pacientes);
 
         Authentication auth= SecurityContextHolder.getContext().getAuthentication();
@@ -71,22 +70,15 @@ public class EnfController {
     @GetMapping("paciente/{nombre}")
     public String paciente(PacienteEntity paciente, @RequestParam Long historia, Model model, @PathVariable String nombre) {
 
-        PacienteEntity pacienteEspecifico = pacienteServiceImpl.findPacienteById(paciente);
-        HistoriaEntity historiaEspecifica= historiaServiceImpl.buscaHistoria(historia);
-
+        HistoriaEntity historiaEspecifica= historiaServiceImpl.findHistoryById(historia);
         DateTimeFormatter formato=DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String fecha= pacienteEspecifico.getFechaNacimiento().format(formato);
 
-        model.addAttribute("fecha", fecha);
-        model.addAttribute("nombre",nombre);
-        model.addAttribute("paciente", pacienteEspecifico);
-        model.addAttribute("historiaEspecifica", historiaEspecifica);
         return "enf/paciente-form";
     }
 
     @GetMapping("paciente/eliminar")
     public String eliminar(PacienteEntity paciente) {
-        pacienteServiceImpl.borraPaciente(paciente);
+        pacienteServiceImpl.deletePatients(paciente);
         return "redirect:/enf/";
     }
 
@@ -105,10 +97,10 @@ public class EnfController {
             paciente.setHistoriaEntity(historiaNueva);
         } else {
             // CASO EDICIÓN
-            HistoriaEntity historiaExistente = historiaServiceImpl.buscaHistoria(idHistoria);
+            HistoriaEntity historiaExistente = historiaServiceImpl.findHistoryById(idHistoria);
             paciente.setHistoriaEntity(historiaExistente);
         }
-        pacienteServiceImpl.guardaPaciente(paciente);
+        pacienteServiceImpl.savePatients(paciente);
 
         return "redirect:/enf/";
     }
@@ -116,7 +108,7 @@ public class EnfController {
     @GetMapping("paciente/ExportarExcel")
     public void exportarExcel(HttpServletResponse response) throws IOException {
 
-        List<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes();
+        List<PacienteEntity> pacientes= pacienteServiceImpl.listPatients();
 
         response.setContentType("application/octec-stream");
         DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");

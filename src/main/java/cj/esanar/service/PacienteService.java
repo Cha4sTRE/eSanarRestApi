@@ -8,13 +8,12 @@ import java.util.List;
 
 public interface PacienteService {
 
-    List<PacienteEntity> listaPacientes();
+    List<PacienteEntity> listPatients();
 
-    Page<PacienteEntity> listaPacientes(Pageable pageable,String filtro);
-    Page<PacienteEntity> listaPacientes(Pageable pageable);
-    PacienteEntity findPacienteById(PacienteEntity paciente);
-    void guardaPaciente(PacienteEntity paciente);
-    void guardaPacientes(List<PacienteEntity> pacientes);
-    void borraPaciente(PacienteEntity paciente);
+    Page<PacienteEntity> listPatients(Pageable pageable,String filtro);
+    Page<PacienteEntity> listPatients(Pageable pageable);
+    PacienteEntity findPatientsById(PacienteEntity paciente);
+    void savePatients(PacienteEntity paciente);
+    void deletePatients(PacienteEntity paciente);
 
 }

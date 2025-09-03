@@ -1,4 +1,4 @@
-package cj.esanar.service.implement;
+package cj.esanar.service.implement.security;
 
 import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.persistence.repository.UserRepository;

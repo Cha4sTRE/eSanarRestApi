@@ -13,52 +13,49 @@ import java.time.Period;
 import java.util.List;
 
 @Service
-public class PacienteServiceImpl implements PacienteService {
+public class PatientServiceImpl implements PacienteService {
 
     @Autowired
     private PacienteRepository pacienteRepository;
 
     @Override
-    public Page<PacienteEntity> listaPacientes(Pageable page,String filtro) {
+    public Page<PacienteEntity> listPatients(Pageable page,String filtro) {
         if(filtro!=null||filtro==""){
             return pacienteRepository.findByfilter(page, filtro);
         }
-        return listaPacientes(page);
+        return listPatients(page);
     }
 
     @Override
-    public Page<PacienteEntity> listaPacientes(Pageable pageable) {
+    public Page<PacienteEntity> listPatients(Pageable pageable) {
         return pacienteRepository.findAll(pageable);
     }
 
     @Override
-    public List<PacienteEntity> listaPacientes() {
+    public List<PacienteEntity> listPatients() {
         return pacienteRepository.findAll();
     }
 
     @Override
-    public PacienteEntity findPacienteById(PacienteEntity paciente) {
+    public PacienteEntity findPatientsById(PacienteEntity paciente) {
         return pacienteRepository.findById(paciente.getId()).orElse(null);
     }
 
     @Override
-    public void guardaPaciente(PacienteEntity paciente) {
+    public void savePatients(PacienteEntity paciente) {
         paciente.setEdad(calculateEdad(paciente.getFechaNacimiento()));
         pacienteRepository.save(paciente);
     }
-    public void guardaPacientes(List<PacienteEntity> pacientes) {
-        pacienteRepository.saveAll(pacientes);
-    }
     @Override
-    public void borraPaciente(PacienteEntity paciente) {
+    public void deletePatients(PacienteEntity paciente) {
         pacienteRepository.delete(paciente);
     }
 
     private int calculateEdad(LocalDate fechaNacimiento){
 
         LocalDate today = LocalDate.now();
-        Period periodo= Period.between(fechaNacimiento,today);
-        int years = periodo.getYears();
+        Period period= Period.between(fechaNacimiento,today);
+        int years = period.getYears();
         return years;
     }
 }

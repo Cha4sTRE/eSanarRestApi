@@ -8,13 +8,9 @@ import java.util.List;
 
 public interface HistoriaService {
 
-    List<HistoriaEntity> listaHistorias();
+    List<HistoriaEntity> listHistory();
+    HistoriaEntity findHistoryById(Long id);
+    void saveHistory(HistoriaEntity historia);
 
-
-    void guardaHistoria(HistoriaEntity historia);
-    void guardaHistorias(List<HistoriaEntity> historias);
-    HistoriaEntity buscaHistoria(Long id);
-
-    void borraHistoria(HistoriaEntity historia);
 
 }
