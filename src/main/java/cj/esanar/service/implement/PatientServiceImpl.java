@@ -2,7 +2,7 @@ package cj.esanar.service.implement;
 
 import cj.esanar.persistence.entity.PatientEntity;
 import cj.esanar.persistence.repository.PacienteRepository;
-import cj.esanar.service.PacienteService;
+import cj.esanar.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,7 @@ import java.time.Period;
 import java.util.List;
 
 @Service
-public class PatientServiceImpl implements PacienteService {
+public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private PacienteRepository pacienteRepository;
