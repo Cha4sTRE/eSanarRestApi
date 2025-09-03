@@ -5,15 +5,14 @@ import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.service.HistoryService;
 import cj.esanar.service.PatientService;
-import cj.esanar.util.pagination.PageRender;
 import cj.esanar.util.reports.ExportarPacientesExel;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.ui.Model;
@@ -30,30 +29,28 @@ import java.util.List;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("/enf")
+@RequestMapping("/patient")
 @PreAuthorize("hasAnyRole('ENF','MEDIC','ADMIN','VISITOR')")
-public class EnfController {
+public class patientsController {
 
     private final PatientService patientServiceImpl;
     private final HistoryService historyServiceImpl;
     private UserDetailsService userDetailsService;
 
     @GetMapping("/")
-    public String home(@RequestParam(name = "page",defaultValue ="0") int page,@RequestParam(name = "filter",defaultValue = "all")String filter) {
+    public ResponseEntity<List<PacienteEntity>> home(@RequestParam(name = "page",defaultValue ="0") int page, @RequestParam(name = "filter",defaultValue = "all")String filter) {
 
-
-        List<PacienteEntity> pacientes=  patientServiceImpl.listPatients();
-
-        return "pacientes";
+        List<PacienteEntity> patients=  patientServiceImpl.listPatients();
+        return ResponseEntity.ok(patients);
     }
 
-    @GetMapping("paciente/nuevo")
-    public String nuevo(PacienteEntity paciente,Model model) {
-        model.addAttribute("paciente", paciente);
-        return "enf/paciente-form";
+    @GetMapping("/nuevo")
+    public ResponseEntity<PacienteEntity> nuevo(@RequestBody PacienteEntity paciente) {
+        patientServiceImpl.savePatients(paciente);
+        return ResponseEntity.ok(paciente);
     }
 
-    @GetMapping("paciente/{nombre}")
+    @GetMapping("find/{name}")
     public String paciente(PacienteEntity paciente, @RequestParam Long historia, Model model, @PathVariable String nombre) {
 
         HistoriaEntity historiaEspecifica= historyServiceImpl.findHistoryById(historia);
@@ -62,12 +59,12 @@ public class EnfController {
         return "enf/paciente-form";
     }
 
-    @GetMapping("paciente/eliminar")
+    @GetMapping("/delete")
     public String eliminar(PacienteEntity paciente) {
         patientServiceImpl.deletePatients(paciente);
         return "redirect:/enf/";
     }
-    
+
 
     @GetMapping("paciente/ExportarExcel")
     public void exportarExcel(HttpServletResponse response) throws IOException {

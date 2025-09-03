@@ -40,22 +40,8 @@ public class ConsultationController {
     private final UserDetailServiceImpl userDetailService;
 
 
-    @GetMapping("/historias/{nombre}")
-    public String historias(Model model,HistoriaEntity historia,@RequestParam(name = "page",defaultValue = "0")int page,
-                            @PathVariable String nombre, @RequestParam(name = "filtro",defaultValue = "all")String filtro) {
-
-
-        DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        HistoriaEntity consultasHistoria= historyService.findHistoryById(historia.getId());
-        Pageable pageable = PageRequest.of(page, 6, Sort.by("id").ascending());
-        Page<ConsultaEntity> consultaPage;
-        if (filtro == null || filtro.isBlank() || filtro.equals("all")) {
-            consultaPage = consultationService.listConsultations(pageable, consultasHistoria.getId());
-        } else {
-            consultaPage = consultationService.listConsultations(pageable, consultasHistoria.getId(), filtro);
-        }
-
-        PageRender<ConsultaEntity> consultaRender= new PageRender<>("/consulta/historias/"+nombre+"?id="+historia.getId(),consultaPage);
+    @GetMapping("/historias/")
+    public String historias(HistoriaEntity historia,@RequestParam(name = "page",defaultValue = "0")int page) {
 
         return "consulta/historias";
     }
@@ -67,9 +53,6 @@ public class ConsultationController {
         LocalDateTime ahora= LocalDateTime.now();
         DateTimeFormatter horaFormat= DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
 
-        model.addAttribute("consulta", consulta);
-        model.addAttribute("historiaPaciente", historyService.findHistoryById(historiaId.getId()));
-        model.addAttribute("hora", ahora.format(horaFormat));
         return "consulta/consulta-form";
     }
 
