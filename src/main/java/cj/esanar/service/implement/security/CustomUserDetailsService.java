@@ -1,4 +1,4 @@
-package cj.esanar.service.implement;
+package cj.esanar.service.implement.security;
 
 import cj.esanar.persistence.entity.auth.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -43,12 +43,16 @@ public class CustomUserDetailsService implements UserDetails {
     public Long getTelefono(){
         return user.getTelefono();
     }
+
     @Override
     public boolean isAccountNonExpired() { return true; }
+
     @Override
     public boolean isAccountNonLocked() { return true; }
+
     @Override
     public boolean isCredentialsNonExpired() { return true; }
+
     @Override
     public boolean isEnabled() { return true; }
 }
