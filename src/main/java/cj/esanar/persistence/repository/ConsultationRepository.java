@@ -1,15 +1,11 @@
 package cj.esanar.persistence.repository;
 
 import cj.esanar.persistence.entity.EvaluationEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 @Repository
-public interface ConsultaRepository extends JpaRepository<EvaluationEntity,Long> {
-    @Query("""
+public interface ConsultationRepository extends JpaRepository<EvaluationEntity,Long> {
+   /* @Query("""
     SELECT c FROM EvaluationEntity c
     WHERE c.historiaClinica.id = :id
     """)
@@ -25,5 +21,5 @@ public interface ConsultaRepository extends JpaRepository<EvaluationEntity,Long>
     )
 """)
     Page<EvaluationEntity> findAllById(Pageable pageable, Long id, @Param("filtro") String filtro);
-
+*/
 }

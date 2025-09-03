@@ -1,7 +1,7 @@
 package cj.esanar.service.implement;
 
 import cj.esanar.persistence.entity.HistoryEntity;
-import cj.esanar.persistence.repository.HistoriaRepository;
+import cj.esanar.persistence.repository.HistoryRepository;
 import cj.esanar.service.HistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class HistoryServiceImpl implements HistoryService {
 
-    private final HistoriaRepository historiaRepository;
+    private final HistoryRepository historiaRepository;
 
     @Override
     public List<HistoryEntity> listHistory() {

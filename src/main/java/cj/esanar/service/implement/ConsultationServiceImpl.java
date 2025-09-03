@@ -1,7 +1,7 @@
 package cj.esanar.service.implement;
 
 import cj.esanar.persistence.entity.EvaluationEntity;
-import cj.esanar.persistence.repository.ConsultaRepository;
+import cj.esanar.persistence.repository.ConsultationRepository;
 import cj.esanar.service.ConsultationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,22 +14,13 @@ import java.util.Set;
 @Service
 public class ConsultationServiceImpl implements ConsultationService {
 
-    private final ConsultaRepository consultaRepository;
+    private final ConsultationRepository consultaRepository;
 
     @Override
     public Set<EvaluationEntity> listConsultations() {
         return (Set<EvaluationEntity>) consultaRepository.findAll();
     }
 
-    @Override
-    public Page<EvaluationEntity> listConsultations(Pageable pageable, Long id) {
-        return consultaRepository.findAllById(pageable,id);
-    }
-
-    @Override
-    public Page<EvaluationEntity> listConsultations(Pageable pageable, Long id, String filtros) {
-        return consultaRepository.findAllById(pageable,id, filtros);
-    }
 
     @Override
     public void saveConsultation(EvaluationEntity consulta) {

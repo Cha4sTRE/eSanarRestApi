@@ -11,8 +11,6 @@ public interface ConsultationService {
 
    Set<EvaluationEntity> listConsultations();
 
-   Page<EvaluationEntity> listConsultations(Pageable pageable, Long id);
-   Page<EvaluationEntity> listConsultations(Pageable pageable, Long id, String filtros);
    void saveConsultation(EvaluationEntity consulta);
    EvaluationEntity findConsultationtById(EvaluationEntity consulta);
 

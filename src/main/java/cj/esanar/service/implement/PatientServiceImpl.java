@@ -1,7 +1,7 @@
 package cj.esanar.service.implement;
 
 import cj.esanar.persistence.entity.PatientEntity;
-import cj.esanar.persistence.repository.PacienteRepository;
+import cj.esanar.persistence.repository.PatientRepository;
 import cj.esanar.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,7 @@ import java.util.List;
 public class PatientServiceImpl implements PatientService {
 
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private PatientRepository pacienteRepository;
 
     @Override
     public Page<PatientEntity> listPatients(Pageable page, String filtro) {
