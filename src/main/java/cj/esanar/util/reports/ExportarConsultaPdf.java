@@ -1,6 +1,6 @@
 package cj.esanar.util.reports;
 
-import cj.esanar.persistence.entity.ConsultaEntity;
+import cj.esanar.persistence.entity.EvaluationEntity;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
@@ -15,7 +15,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class ExportarConsultaPdf {
 
-    ConsultaEntity consulta;
+    EvaluationEntity consulta;
 
     private void header(PdfPTable table) {
         PdfPCell cell = new PdfPCell();
@@ -34,29 +34,29 @@ public class ExportarConsultaPdf {
     private void body(PdfPTable table) {
 
         table.addCell("Paciente");
-        table.addCell(consulta.getHistoriaClinica().getPaciente().getNombre()+" "+consulta.getHistoriaClinica().getPaciente().getApellido());
+        table.addCell(consulta.getClinicalHistory().getPatient().getName()+" "+consulta.getClinicalHistory().getPatient().getLastName());
         table.addCell("Motivo");
-        table.addCell(consulta.getMotivoConsulta());
+        table.addCell(consulta.getMotive());
         table.addCell("Diagnostico(CIE-11)");
-        table.addCell(consulta.getDiagnosticoPrincipal());
+        table.addCell(consulta.getPrimaryDiagnosis());
         table.addCell("infeccion");
         table.addCell(consulta.getInfeccion());
         table.addCell("Forma");
-        table.addCell(consulta.getForma());
+        table.addCell(consulta.getForm());
         table.addCell("Largo");
         table.addCell(String.valueOf(consulta.getLargo()));
         table.addCell("Ancho");
-        table.addCell(String.valueOf(consulta.getAncho()));
+        table.addCell(String.valueOf(consulta.getWidth()));
         table.addCell("Profundidad");
         table.addCell(String.valueOf(consulta.getProfundidad()));
         table.addCell("Olor");
-        table.addCell(consulta.getOlor());
+        table.addCell(consulta.getSmell());
         table.addCell("Bordes");
-        table.addCell(consulta.getBordesHerida());
+        table.addCell(consulta.getWoundEdges());
         table.addCell("Tipo de Exudado");
-        table.addCell(consulta.getExudadoTipo());
+        table.addCell(consulta.getExudateType());
         table.addCell("Nivel de Exudado");
-        table.addCell(consulta.getExudadoNivel());
+        table.addCell(consulta.getExudateLevel());
 
     }
 
@@ -70,8 +70,8 @@ public class ExportarConsultaPdf {
         font.setColor(Color.BLACK);
         font.setSize(22);
 
-        Paragraph titulo = new Paragraph("Reporte de Consulta para "+consulta.getHistoriaClinica().getPaciente().getNombre()+
-                " "+consulta.getHistoriaClinica().getPaciente().getApellido(), font);
+        Paragraph titulo = new Paragraph("Reporte de Consulta para "+consulta.getClinicalHistory().getPatient().getName()+
+                " "+consulta.getClinicalHistory().getPatient().getLastName(), font);
         titulo.setAlignment(Element.ALIGN_CENTER);
         document.add(titulo);
         PdfPTable table = new PdfPTable(2);

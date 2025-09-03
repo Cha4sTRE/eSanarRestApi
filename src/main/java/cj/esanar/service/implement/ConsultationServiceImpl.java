@@ -1,6 +1,6 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.persistence.entity.ConsultaEntity;
+import cj.esanar.persistence.entity.EvaluationEntity;
 import cj.esanar.persistence.repository.ConsultaRepository;
 import cj.esanar.service.ConsultationService;
 import lombok.RequiredArgsConstructor;
@@ -17,27 +17,27 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final ConsultaRepository consultaRepository;
 
     @Override
-    public Set<ConsultaEntity> listConsultations() {
-        return (Set<ConsultaEntity>) consultaRepository.findAll();
+    public Set<EvaluationEntity> listConsultations() {
+        return (Set<EvaluationEntity>) consultaRepository.findAll();
     }
 
     @Override
-    public Page<ConsultaEntity> listConsultations(Pageable pageable,Long id) {
+    public Page<EvaluationEntity> listConsultations(Pageable pageable, Long id) {
         return consultaRepository.findAllById(pageable,id);
     }
 
     @Override
-    public Page<ConsultaEntity> listConsultations(Pageable pageable,Long id, String filtros) {
+    public Page<EvaluationEntity> listConsultations(Pageable pageable, Long id, String filtros) {
         return consultaRepository.findAllById(pageable,id, filtros);
     }
 
     @Override
-    public void saveConsultation(ConsultaEntity consulta) {
+    public void saveConsultation(EvaluationEntity consulta) {
         consultaRepository.save(consulta);
     }
 
     @Override
-    public ConsultaEntity findConsultationtById(ConsultaEntity consulta) {
+    public EvaluationEntity findConsultationtById(EvaluationEntity consulta) {
         return consultaRepository.findById(consulta.getId()).orElse(null);
     }
 

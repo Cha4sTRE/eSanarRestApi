@@ -1,8 +1,8 @@
 package cj.esanar.controller;
 
 
-import cj.esanar.persistence.entity.HistoriaEntity;
-import cj.esanar.persistence.entity.PacienteEntity;
+import cj.esanar.persistence.entity.HistoryEntity;
+import cj.esanar.persistence.entity.PatientEntity;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.PacienteService;
 import cj.esanar.service.implement.security.CustomUserDetailsService;
@@ -45,9 +45,9 @@ public class EnfController {
     public String home(Model model,@RequestParam(name = "page",defaultValue ="0") int page,@RequestParam(name = "filtro",defaultValue = "all")String filtro) {
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by("id").ascending());
-        Page<PacienteEntity> pacientes;
+        Page<PatientEntity> pacientes;
         pacientes= (filtro.equals("all") ? pacienteServiceImpl.listPatients(pageable): pacienteServiceImpl.listPatients(pageable,filtro));
-        PageRender<PacienteEntity> pacientesRender= new PageRender<>("/enf/",pacientes);
+        PageRender<PatientEntity> pacientesRender= new PageRender<>("/enf/",pacientes);
 
         Authentication auth= SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService userAuth= (CustomUserDetailsService) auth.getPrincipal();
@@ -62,42 +62,42 @@ public class EnfController {
     }
 
     @GetMapping("paciente/nuevo")
-    public String nuevo(PacienteEntity paciente,Model model) {
+    public String nuevo(PatientEntity paciente, Model model) {
         model.addAttribute("paciente", paciente);
         return "enf/paciente-form";
     }
 
     @GetMapping("paciente/{nombre}")
-    public String paciente(PacienteEntity paciente, @RequestParam Long historia, Model model, @PathVariable String nombre) {
+    public String paciente(PatientEntity paciente, @RequestParam Long historia, Model model, @PathVariable String nombre) {
 
-        HistoriaEntity historiaEspecifica= historiaServiceImpl.findHistoryById(historia);
+        HistoryEntity historiaEspecifica= historiaServiceImpl.findHistoryById(historia);
         DateTimeFormatter formato=DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         return "enf/paciente-form";
     }
 
     @GetMapping("paciente/eliminar")
-    public String eliminar(PacienteEntity paciente) {
+    public String eliminar(PatientEntity paciente) {
         pacienteServiceImpl.deletePatients(paciente);
         return "redirect:/enf/";
     }
 
     @PostMapping("paciente/guardar")
-    public String guardar(@Valid PacienteEntity paciente, @RequestParam(value = "idHistoria",required = false) Long idHistoria,@RequestParam String fechaNacimiento, Errors errors) {
+    public String guardar(@Valid PatientEntity paciente, @RequestParam(value = "idHistoria",required = false) Long idHistoria, @RequestParam String fechaNacimiento, Errors errors) {
         if (errors.hasErrors()) {
             return "enf/paciente-form";
         }
         LocalDate dateNacimiento= LocalDate.parse(fechaNacimiento);
         LocalDate hoy=LocalDate.now();
-        paciente.setFechaNacimiento(dateNacimiento);
+        paciente.setBirthDate(dateNacimiento);
         if (paciente.getId() == null) {
             // CASO NUEVO
-            HistoriaEntity historiaNueva= new HistoriaEntity(null, hoy, paciente, Collections.emptySet());
-            historiaNueva.setPaciente(paciente);
+            HistoryEntity historiaNueva= new HistoryEntity(null, hoy, paciente, Collections.emptySet());
+            historiaNueva.setPatient(paciente);
             paciente.setHistoriaEntity(historiaNueva);
         } else {
             // CASO EDICIÓN
-            HistoriaEntity historiaExistente = historiaServiceImpl.findHistoryById(idHistoria);
+            HistoryEntity historiaExistente = historiaServiceImpl.findHistoryById(idHistoria);
             paciente.setHistoriaEntity(historiaExistente);
         }
         pacienteServiceImpl.savePatients(paciente);
@@ -108,7 +108,7 @@ public class EnfController {
     @GetMapping("paciente/ExportarExcel")
     public void exportarExcel(HttpServletResponse response) throws IOException {
 
-        List<PacienteEntity> pacientes= pacienteServiceImpl.listPatients();
+        List<PatientEntity> pacientes= pacienteServiceImpl.listPatients();
 
         response.setContentType("application/octec-stream");
         DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");

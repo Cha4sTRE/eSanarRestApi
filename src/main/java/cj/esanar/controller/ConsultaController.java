@@ -1,7 +1,7 @@
 package cj.esanar.controller;
 
-import cj.esanar.persistence.entity.ConsultaEntity;
-import cj.esanar.persistence.entity.HistoriaEntity;
+import cj.esanar.persistence.entity.EvaluationEntity;
+import cj.esanar.persistence.entity.HistoryEntity;
 import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.service.ConsultationService;
 import cj.esanar.service.HistoriaService;
@@ -41,27 +41,27 @@ public class ConsultaController {
 
 
     @GetMapping("/historias/{nombre}")
-    public String historias(Model model,HistoriaEntity historia,@RequestParam(name = "page",defaultValue = "0")int page,
+    public String historias(Model model, HistoryEntity historia, @RequestParam(name = "page",defaultValue = "0")int page,
                             @PathVariable String nombre, @RequestParam(name = "filtro",defaultValue = "all")String filtro) {
 
 
         DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        HistoriaEntity consultasHistoria= historiaService.findHistoryById(historia.getId());
+        HistoryEntity consultasHistoria= historiaService.findHistoryById(historia.getId());
         Pageable pageable = PageRequest.of(page, 6, Sort.by("id").ascending());
-        Page<ConsultaEntity> consultaPage;
+        Page<EvaluationEntity> consultaPage;
         if (filtro == null || filtro.isBlank() || filtro.equals("all")) {
             consultaPage = consultaService.listConsultations(pageable, consultasHistoria.getId());
         } else {
             consultaPage = consultaService.listConsultations(pageable, consultasHistoria.getId(), filtro);
         }
 
-        PageRender<ConsultaEntity> consultaRender= new PageRender<>("/consulta/historias/"+nombre+"?id="+historia.getId(),consultaPage);
+        PageRender<EvaluationEntity> consultaRender= new PageRender<>("/consulta/historias/"+nombre+"?id="+historia.getId(),consultaPage);
 
         return "consulta/historias";
     }
 
     @GetMapping("/nueva")
-    public String nueva(ConsultaEntity consulta,@RequestParam HistoriaEntity historiaId, Model model) {
+    public String nueva(EvaluationEntity consulta, @RequestParam HistoryEntity historiaId, Model model) {
 
 
         LocalDateTime ahora= LocalDateTime.now();
@@ -74,32 +74,32 @@ public class ConsultaController {
     }
 
     @GetMapping("/historia/{historiaId}")
-    public String verConsulta(@PathVariable HistoriaEntity historiaId,@RequestParam ConsultaEntity consulta, Model model) {
+    public String verConsulta(@PathVariable HistoryEntity historiaId, @RequestParam EvaluationEntity consulta, Model model) {
 
-        ConsultaEntity editConsulta= consultaService.findConsultationtById(consulta);
-        HistoriaEntity editHistoria= historiaService.findHistoryById(historiaId.getId());
-        LocalDateTime fechaHoraAtencion= editConsulta.getFechaHoraAtencion();
+        EvaluationEntity editConsulta= consultaService.findConsultationtById(consulta);
+        HistoryEntity editHistoria= historiaService.findHistoryById(historiaId.getId());
+        LocalDateTime fechaHoraAtencion= editConsulta.getServiceDate();
 
         return "consulta/consulta-form";
     }
 
     @GetMapping("/exportarInforme")
-    public void exportarInforme(@RequestParam ConsultaEntity consulta, HttpServletResponse response) throws IOException {
+    public void exportarInforme(@RequestParam EvaluationEntity consulta, HttpServletResponse response) throws IOException {
 
        response.setContentType("application/pdf");
        DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
-       String fecha= formato.format(consulta.getFechaHoraAtencion());
+       String fecha= formato.format(consulta.getServiceDate());
 
        String cabecera= "Content-Disposition";
        String valor="attachment; filename=Consulta_"+fecha+".pdf";
        response.setHeader(cabecera,valor);
-       ConsultaEntity consultapdf= consultaService.findConsultationtById(consulta);
+       EvaluationEntity consultapdf= consultaService.findConsultationtById(consulta);
        ExportarConsultaPdf exportar= new ExportarConsultaPdf(consultapdf);
        exportar.export(response);
     }
 
     @PostMapping("/agregar")
-    public String agregar(@Valid ConsultaEntity consulta, @RequestParam("idHistoria") Long idHistoria, @RequestParam LocalDateTime fechaHora, Errors errors) {
+    public String agregar(@Valid EvaluationEntity consulta, @RequestParam("idHistoria") Long idHistoria, @RequestParam LocalDateTime fechaHora, Errors errors) {
         if(errors.hasErrors()) {
             System.out.println(errors.getAllErrors());
             return "consulta/consulta-form";
@@ -109,15 +109,15 @@ public class ConsultaController {
         UserEntity enf= userDetailService.getById(enfUser.getId());
 
         consulta.setEnfermera(enf);
-        consulta.setFechaHoraAtencion(fechaHora);
-        consulta.setHoraFinal(LocalTime.now());
+        consulta.setServiceDate(fechaHora);
+        consulta.setFinalTime(LocalTime.now());
 
-        HistoriaEntity hPaciente= historiaService.findHistoryById(idHistoria);
-        consulta.setHistoriaClinica(hPaciente);
+        HistoryEntity hPaciente= historiaService.findHistoryById(idHistoria);
+        consulta.setClinicalHistory(hPaciente);
         hPaciente.agregarConsultas(consulta);
 
         consultaService.findConsultationtById(consulta);
-        return "redirect:/consulta/historias/"+hPaciente.getPaciente().getNombre()+"?"+"id="+hPaciente.getId();
+        return "redirect:/consulta/historias/"+hPaciente.getPatient().getName()+"?"+"id="+hPaciente.getId();
     }
 
 

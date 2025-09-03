@@ -1,8 +1,5 @@
 package cj.esanar.service.dtos;
 
-import cj.esanar.persistence.entity.ConsultaEntity;
-import cj.esanar.persistence.entity.PacienteEntity;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;

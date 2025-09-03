@@ -1,6 +1,6 @@
 package cj.esanar.util.reports;
 
-import cj.esanar.persistence.entity.PacienteEntity;
+import cj.esanar.persistence.entity.PatientEntity;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,9 +17,9 @@ public class ExportarPacientesExel {
 
     private XSSFWorkbook libro;
     private XSSFSheet hoja;
-    private List<PacienteEntity> pacientes;
+    private List<PatientEntity> pacientes;
 
-    public ExportarPacientesExel(List<PacienteEntity> pacientes) {
+    public ExportarPacientesExel(List<PatientEntity> pacientes) {
         this.pacientes = pacientes;
         libro= new XSSFWorkbook();
         hoja= libro.createSheet("Pacientes");
@@ -108,7 +108,7 @@ public class ExportarPacientesExel {
         font.setFontHeight(12);
         style.setFont(font);
 
-        for(PacienteEntity paciente: pacientes){
+        for(PatientEntity paciente: pacientes){
             Row fila= hoja.createRow(filas++);
 
             Cell cell=fila.createCell(0);
@@ -117,77 +117,77 @@ public class ExportarPacientesExel {
             hoja.autoSizeColumn(0);
 
             cell=fila.createCell(1);
-            cell.setCellValue(paciente.getNombre());
+            cell.setCellValue(paciente.getName());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(1);
 
             cell=fila.createCell(2);
-            cell.setCellValue(paciente.getApellido());
+            cell.setCellValue(paciente.getLastName());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(2);
 
             cell=fila.createCell(3);
-            cell.setCellValue(paciente.getTipoDocumento());
+            cell.setCellValue(paciente.getDocumentType());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(3);
 
             cell=fila.createCell(4);
-            cell.setCellValue(paciente.getIdentificacion());
+            cell.setCellValue(paciente.getIdentification());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(4);
 
             cell=fila.createCell(5);
-            cell.setCellValue(paciente.getTelefono());
+            cell.setCellValue(paciente.getPhoneNumber());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(5);
 
             cell=fila.createCell(6);
-            cell.setCellValue(paciente.getDireccion());
+            cell.setCellValue(paciente.getAddress());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(6);
 
             cell=fila.createCell(7);
-            cell.setCellValue(paciente.getBarrio());
+            cell.setCellValue(paciente.getNeighborhood());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(7);
 
             cell=fila.createCell(8);
-            cell.setCellValue(paciente.getFechaNacimiento());
+            cell.setCellValue(paciente.getBirthDate());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(8);
 
             cell=fila.createCell(9);
-            cell.setCellValue(paciente.getEdad());
+            cell.setCellValue(paciente.getAge());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(9);
 
             cell=fila.createCell(10);
-            cell.setCellValue(paciente.getSexo());
+            cell.setCellValue(paciente.getSex());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(10);
 
             cell=fila.createCell(11);
-            cell.setCellValue(paciente.getTipoSangre());
+            cell.setCellValue(paciente.getBloodType());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(11);
 
             cell=fila.createCell(12);
-            cell.setCellValue(paciente.getCorreo());
+            cell.setCellValue(paciente.getEmail());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(10);
 
             cell=fila.createCell(13);
-            cell.setCellValue(paciente.getOcupacion());
+            cell.setCellValue(paciente.getOcupation());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(13);
 
             cell=fila.createCell(14);
-            cell.setCellValue(paciente.getEntidad());
+            cell.setCellValue(paciente.getEps());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(14);
 
             cell=fila.createCell(15);
-            cell.setCellValue(paciente.getEstadoCivil());
+            cell.setCellValue(paciente.getMaritalStatus());
             cell.setCellStyle(style);
             hoja.autoSizeColumn(15);
         }

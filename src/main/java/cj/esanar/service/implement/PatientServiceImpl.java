@@ -1,6 +1,6 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.persistence.entity.PacienteEntity;
+import cj.esanar.persistence.entity.PatientEntity;
 import cj.esanar.persistence.repository.PacienteRepository;
 import cj.esanar.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class PatientServiceImpl implements PacienteService {
     private PacienteRepository pacienteRepository;
 
     @Override
-    public Page<PacienteEntity> listPatients(Pageable page,String filtro) {
+    public Page<PatientEntity> listPatients(Pageable page, String filtro) {
         if(filtro!=null||filtro==""){
             return pacienteRepository.findByfilter(page, filtro);
         }
@@ -27,27 +27,27 @@ public class PatientServiceImpl implements PacienteService {
     }
 
     @Override
-    public Page<PacienteEntity> listPatients(Pageable pageable) {
+    public Page<PatientEntity> listPatients(Pageable pageable) {
         return pacienteRepository.findAll(pageable);
     }
 
     @Override
-    public List<PacienteEntity> listPatients() {
+    public List<PatientEntity> listPatients() {
         return pacienteRepository.findAll();
     }
 
     @Override
-    public PacienteEntity findPatientsById(PacienteEntity paciente) {
+    public PatientEntity findPatientsById(PatientEntity paciente) {
         return pacienteRepository.findById(paciente.getId()).orElse(null);
     }
 
     @Override
-    public void savePatients(PacienteEntity paciente) {
-        paciente.setEdad(calculateEdad(paciente.getFechaNacimiento()));
+    public void savePatients(PatientEntity paciente) {
+        paciente.setAge(calculateEdad(paciente.getBirthDate()));
         pacienteRepository.save(paciente);
     }
     @Override
-    public void deletePatients(PacienteEntity paciente) {
+    public void deletePatients(PatientEntity paciente) {
         pacienteRepository.delete(paciente);
     }
 

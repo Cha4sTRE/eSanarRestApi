@@ -1,6 +1,6 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.persistence.entity.HistoriaEntity;
+import cj.esanar.persistence.entity.HistoryEntity;
 import cj.esanar.persistence.repository.HistoriaRepository;
 import cj.esanar.service.HistoriaService;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +15,17 @@ public class HistoryServiceImpl implements HistoriaService {
     private final HistoriaRepository historiaRepository;
 
     @Override
-    public List<HistoriaEntity> listHistory() {
-        return (List<HistoriaEntity>) historiaRepository.findAll();
+    public List<HistoryEntity> listHistory() {
+        return (List<HistoryEntity>) historiaRepository.findAll();
     }
 
     @Override
-    public void saveHistory(HistoriaEntity historia) {
+    public void saveHistory(HistoryEntity historia) {
         historiaRepository.save(historia);
     }
 
     @Override
-    public HistoriaEntity findHistoryById(Long id) {
+    public HistoryEntity findHistoryById(Long id) {
         return historiaRepository.findById(id).orElse(null);
     }
 

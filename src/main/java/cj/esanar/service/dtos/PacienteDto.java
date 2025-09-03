@@ -1,6 +1,5 @@
 package cj.esanar.service.dtos;
 
-import cj.esanar.persistence.entity.HistoriaEntity;
 import lombok.Data;
 
 import java.time.LocalDate;

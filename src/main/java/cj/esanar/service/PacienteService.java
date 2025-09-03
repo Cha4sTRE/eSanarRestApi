@@ -1,6 +1,6 @@
 package cj.esanar.service;
 
-import cj.esanar.persistence.entity.PacienteEntity;
+import cj.esanar.persistence.entity.PatientEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface PacienteService {
 
-    List<PacienteEntity> listPatients();
+    List<PatientEntity> listPatients();
 
-    Page<PacienteEntity> listPatients(Pageable pageable,String filtro);
-    Page<PacienteEntity> listPatients(Pageable pageable);
-    PacienteEntity findPatientsById(PacienteEntity paciente);
-    void savePatients(PacienteEntity paciente);
-    void deletePatients(PacienteEntity paciente);
+    Page<PatientEntity> listPatients(Pageable pageable, String filtro);
+    Page<PatientEntity> listPatients(Pageable pageable);
+    PatientEntity findPatientsById(PatientEntity paciente);
+    void savePatients(PatientEntity paciente);
+    void deletePatients(PatientEntity paciente);
 
 }
