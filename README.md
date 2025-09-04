@@ -38,6 +38,7 @@ Esta versión forma parte de la materia **Codificación y Pruebas de Software** 
 ## 📚 Documentación Relacionada
 - [📄 Proyecto Pedagógico de Aula (PPA)](https://1drv.ms/w/c/5be010ee67a3ad31/EekLPyiJbGhOsDlz2dB8dosB2LUFnpJCnMpfGo0bDKq2Cg?e=21oOci) – Documento base del proyecto con introducción, objetivos y marco teórico.
 - [📑 Documento de Requerimientos de Software](https://1drv.ms/w/c/5be010ee67a3ad31/EaBrYaO4Ys1OgGJVHuI-mMYBz9EpVzdAwGs9Sevy_liDyQ?e=z28KRP) – Contiene los requerimientos funcionales y no funcionales.
+- [📑 Documento Ejecutivo](https://drive.google.com/file/d/1zJwgxlXrEZ5DHEV-tyYnmA0Qu-1cM55R/view?usp=sharing) – Presenta y contextualiza esta nueva fase del proyecto a la materia de Codificacion y Purebas de software.
 
 ---
 
