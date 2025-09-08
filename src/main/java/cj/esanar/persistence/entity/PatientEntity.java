@@ -27,7 +27,7 @@ public class PatientEntity {
     private int age;
     private String sex;
     private String email;
-    private String ocupation;
+    private String occupation;
     private String eps;
 
     @Column(name = "last_name", nullable = false, length = 50)
