@@ -1,17 +1,17 @@
 package cj.esanar.service;
 
-import cj.esanar.persistence.entity.EvaluationEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import cj.esanar.persistence.entity.ConsultationEntity;
+import cj.esanar.service.dtos.ConsultationDto;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Set;
 
 
 public interface ConsultationService {
 
-   Set<EvaluationEntity> listConsultations();
+   ResponseEntity<Set<ConsultationDto>> listConsultations();
 
-   void saveConsultation(EvaluationEntity consulta);
-   EvaluationEntity findConsultationtById(EvaluationEntity consulta);
+   ResponseEntity<ConsultationDto> saveConsultation(ConsultationEntity consulta);
+   ResponseEntity<ConsultationDto> findConsultationtById(ConsultationEntity consulta);
 
 }

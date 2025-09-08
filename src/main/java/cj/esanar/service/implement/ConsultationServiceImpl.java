@@ -1,11 +1,11 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.persistence.entity.EvaluationEntity;
+import cj.esanar.persistence.entity.ConsultationEntity;
 import cj.esanar.persistence.repository.ConsultationRepository;
 import cj.esanar.service.ConsultationService;
+import cj.esanar.service.dtos.ConsultationDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -17,19 +17,17 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final ConsultationRepository consultaRepository;
 
     @Override
-    public Set<EvaluationEntity> listConsultations() {
-        return (Set<EvaluationEntity>) consultaRepository.findAll();
-    }
-
-
-    @Override
-    public void saveConsultation(EvaluationEntity consulta) {
-        consultaRepository.save(consulta);
+    public ResponseEntity<Set<ConsultationDto>> listConsultations() {
+        return null;
     }
 
     @Override
-    public EvaluationEntity findConsultationtById(EvaluationEntity consulta) {
-        return consultaRepository.findById(consulta.getId()).orElse(null);
+    public ResponseEntity<ConsultationDto> saveConsultation(ConsultationEntity consulta) {
+        return null;
     }
 
+    @Override
+    public ResponseEntity<ConsultationDto> findConsultationtById(ConsultationEntity consulta) {
+        return null;
+    }
 }

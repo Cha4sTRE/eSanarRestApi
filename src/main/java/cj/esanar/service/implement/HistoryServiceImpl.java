@@ -3,7 +3,9 @@ package cj.esanar.service.implement;
 import cj.esanar.persistence.entity.HistoryEntity;
 import cj.esanar.persistence.repository.HistoryRepository;
 import cj.esanar.service.HistoryService;
+import cj.esanar.service.dtos.HistoryDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,18 +17,17 @@ public class HistoryServiceImpl implements HistoryService {
     private final HistoryRepository historiaRepository;
 
     @Override
-    public List<HistoryEntity> listHistory() {
-        return (List<HistoryEntity>) historiaRepository.findAll();
+    public ResponseEntity<List<HistoryDto>> listHistory() {
+        return null;
     }
 
     @Override
-    public void saveHistory(HistoryEntity historia) {
-        historiaRepository.save(historia);
+    public ResponseEntity<HistoryDto> findHistoryById(Long id) {
+        return null;
     }
 
     @Override
-    public HistoryEntity findHistoryById(Long id) {
-        return historiaRepository.findById(id).orElse(null);
+    public ResponseEntity<HistoryDto> saveHistory(HistoryEntity historia) {
+        return null;
     }
-
 }

@@ -1,10 +1,10 @@
 package cj.esanar.persistence.repository;
 
-import cj.esanar.persistence.entity.EvaluationEntity;
+import cj.esanar.persistence.entity.ConsultationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 @Repository
-public interface ConsultationRepository extends JpaRepository<EvaluationEntity,Long> {
+public interface ConsultationRepository extends JpaRepository<ConsultationEntity,Long> {
    /* @Query("""
     SELECT c FROM EvaluationEntity c
     WHERE c.historiaClinica.id = :id

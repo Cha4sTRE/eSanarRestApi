@@ -1,19 +1,20 @@
 package cj.esanar.service;
 
 import cj.esanar.persistence.entity.PatientEntity;
+import cj.esanar.service.dtos.PatientDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface PatientService {
 
-    List<PatientEntity> listPatients();
+    ResponseEntity<List<PatientDto>> listPatients();
 
-    Page<PatientEntity> listPatients(Pageable pageable, String filtro);
-    Page<PatientEntity> listPatients(Pageable pageable);
-    PatientEntity findPatientsById(PatientEntity paciente);
-    void savePatients(PatientEntity paciente);
-    void deletePatients(PatientEntity paciente);
+    ResponseEntity<Page<PatientDto>> listPatients(Pageable pageable);
+    ResponseEntity<PatientDto> findPatientsById(Long id);
+    ResponseEntity<PatientDto> savePatients(PatientEntity paciente);
+    ResponseEntity<PatientDto> deletePatients(PatientEntity paciente);
 
 }
