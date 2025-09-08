@@ -50,6 +50,6 @@ public class PatientEntity {
 
 
     @OneToOne(mappedBy = "patient", orphanRemoval = true,cascade = CascadeType.PERSIST)
-    private HistoryEntity historiaEntity;
+    private HistoryEntity historyEntity;
 
 }
