@@ -10,11 +10,8 @@ import java.util.List;
 
 public interface PatientService {
 
-    ResponseEntity<List<PatientDto>> listPatients();
-
-    ResponseEntity<Page<PatientDto>> listPatients(Pageable pageable);
-    ResponseEntity<PatientDto> findPatientsById(Long id);
-    ResponseEntity<PatientDto> savePatients(PatientEntity paciente);
-    ResponseEntity<PatientDto> deletePatients(PatientEntity paciente);
+    Page<PatientDto> listPatients(Pageable pageable);
+    PatientDto findPatientsById(Long id);
+    PatientDto savePatients(PatientEntity paciente);
 
 }

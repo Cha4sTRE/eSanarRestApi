@@ -26,8 +26,8 @@ public class UserEntity {
     private String password;
     @Column(name = "email",length = 50)
     private String email;
-    @Column(name = "telefono")
-    private Long telefono;
+    @Column(name = "phone-number")
+    private Long phoneNumber;
 
     @Column(name = "enabled")
     private boolean isEnabled;

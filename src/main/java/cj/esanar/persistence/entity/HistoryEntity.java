@@ -29,12 +29,7 @@ public class HistoryEntity {
 
     @OneToMany(mappedBy = "clinicalHistory", orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
-    private Set<ConsultationEntity> evaluations = new HashSet<>();
+    private Set<ConsultationEntity> consultations = new HashSet<>();
 
 
-
-    public void agregarConsultas(ConsultationEntity consulta) {
-        this.evaluations.add(consulta);
-        consulta.setClinicalHistory(this);
-    }
 }

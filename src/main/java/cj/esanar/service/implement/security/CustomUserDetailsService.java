@@ -41,7 +41,7 @@ public class CustomUserDetailsService implements UserDetails {
         return user.getEmail();
     }
     public Long getTelefono(){
-        return user.getTelefono();
+        return user.getPhoneNumber();
     }
 
     @Override
