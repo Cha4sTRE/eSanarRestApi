@@ -7,18 +7,18 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Builder
 @Entity
-@Table(name = "medical_history")
+@Table(name = "stories")
 public class HistoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDate date;
 
     /// {@link PatientEntity} relacionado con esta historia
@@ -28,7 +28,6 @@ public class HistoryEntity {
 
 
     @OneToMany(mappedBy = "clinicalHistory", orphanRemoval = true, fetch = FetchType.LAZY)
-    @Builder.Default
     private Set<ConsultationEntity> consultations = new HashSet<>();
 
 

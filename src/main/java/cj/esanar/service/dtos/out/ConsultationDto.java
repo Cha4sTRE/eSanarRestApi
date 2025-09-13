@@ -1,4 +1,4 @@
-package cj.esanar.service.dtos;
+package cj.esanar.service.dtos.out;
 
 
 import java.time.LocalDateTime;

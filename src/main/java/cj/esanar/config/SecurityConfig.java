@@ -23,18 +23,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,CustomSuccessHandler customSuccessHandler) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .formLogin(login->login
-                        .loginPage("/login")
-                        .successHandler(customSuccessHandler)
-                )
-                .logout(logout->logout
-                        .logoutSuccessUrl("/")
-                        .logoutUrl("/logout")
-                        .invalidateHttpSession(true) // Invalida la sesión
-                )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }

@@ -1,7 +1,7 @@
 package cj.esanar.service;
 
 import cj.esanar.persistence.entity.ConsultationEntity;
-import cj.esanar.service.dtos.ConsultationDto;
+import cj.esanar.service.dtos.out.ConsultationDto;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Set;

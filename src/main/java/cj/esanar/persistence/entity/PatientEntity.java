@@ -2,16 +2,14 @@ package cj.esanar.persistence.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Builder
 @Entity
 @Table(name = "patients")
@@ -21,14 +19,16 @@ public class PatientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long identification;
-    private String name;
-    private String address;
-    private String neighborhood;
+    private String address; //Direccion
+    private String neighborhood; //Barrio
     private int age;
-    private String sex;
+    private String gender;
     private String email;
     private String occupation;
     private String eps;
+
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;

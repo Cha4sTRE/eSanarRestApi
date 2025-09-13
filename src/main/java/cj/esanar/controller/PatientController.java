@@ -1,21 +1,22 @@
 package cj.esanar.controller;
 
+import cj.esanar.persistence.entity.PatientEntity;
 import cj.esanar.service.PatientService;
-import cj.esanar.service.dtos.PatientDto;
+import cj.esanar.service.dtos.in.PatientRequest;
+import cj.esanar.service.dtos.out.PatientDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/patient")
 @RequiredArgsConstructor
+@PreAuthorize("permitAll()")
 public class PatientController {
 
     private final PatientService patientService;
@@ -29,6 +30,18 @@ public class PatientController {
 
         return new ResponseEntity<>(patientDtoPage, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<PatientDto> findPatientById(@PathVariable Long id) {
+        PatientDto patientDto= patientService.findPatientsById(id);
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<PatientDto> newPatient(@RequestBody PatientRequest patient) {
+        PatientDto patientDto=patientService.savePatients(patient);
+        return new ResponseEntity<>(patientDto, HttpStatus.CREATED);
     }
 
 }

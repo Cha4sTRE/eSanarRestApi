@@ -7,20 +7,18 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 @Entity
-@Table(name = "evaluations")
+@Table(name = "consultations")
 public class ConsultationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
-
     private String motive;
     private Integer length;
     private Integer width;

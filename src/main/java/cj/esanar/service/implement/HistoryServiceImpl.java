@@ -3,7 +3,7 @@ package cj.esanar.service.implement;
 import cj.esanar.persistence.entity.HistoryEntity;
 import cj.esanar.persistence.repository.HistoryRepository;
 import cj.esanar.service.HistoryService;
-import cj.esanar.service.dtos.HistoryDto;
+import cj.esanar.service.dtos.out.HistoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
