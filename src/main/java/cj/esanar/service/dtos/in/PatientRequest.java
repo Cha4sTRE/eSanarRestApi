@@ -18,7 +18,6 @@ public record PatientRequest(
         @NotNull(message = "El tipo de documento es obligatorio")
         DocumentType documentType,
 
-        @NotBlank(message = "La identificación es obligatoria")
         @Positive(message = "La identificación debe ser un número positivo")
         @Digits(integer = 15, fraction = 0, message = "La identificación debe tener máximo 15 dígitos")
         Long identification,

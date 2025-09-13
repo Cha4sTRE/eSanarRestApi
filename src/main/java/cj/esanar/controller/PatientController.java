@@ -1,9 +1,9 @@
 package cj.esanar.controller;
 
-import cj.esanar.persistence.entity.PatientEntity;
 import cj.esanar.service.PatientService;
 import cj.esanar.service.dtos.in.PatientRequest;
 import cj.esanar.service.dtos.out.PatientDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +39,7 @@ public class PatientController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<PatientDto> newPatient(@RequestBody PatientRequest patient) {
+    public ResponseEntity<PatientDto> newPatient(@RequestBody @Valid PatientRequest patient) {
         PatientDto patientDto=patientService.savePatients(patient);
         return new ResponseEntity<>(patientDto, HttpStatus.CREATED);
     }

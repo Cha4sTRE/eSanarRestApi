@@ -23,17 +23,20 @@ public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long identification;
+
     private String address; //Direccion
     private String neighborhood; //Barrio
     private int age;
+    private String email;
+    private String occupation;
+    private String eps;
+
+    @Column(unique = true)
+    private Long identification;
 
     @Enumerated(EnumType.STRING)
     @NotNull
     private Gender gender;
-    private String email;
-    private String occupation;
-    private String eps;
 
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
