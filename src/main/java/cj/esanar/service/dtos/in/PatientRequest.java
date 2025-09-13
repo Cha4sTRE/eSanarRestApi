@@ -54,7 +54,7 @@ public record PatientRequest(
         @Size(min = 2, max = 50, message = "La ocupación debe tener entre 2 y 50 caracteres")
         String occupation,
 
-        @Size(min = 2, max = 50, message = "La EPS debe tener entre 2 y 50 caracteres")
+        @NotBlank(message = "Nombre de entidad presatadora de servicio")
         String eps,
 
         @NotNull(message = "El estado civil es obligatorio")

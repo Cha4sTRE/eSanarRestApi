@@ -38,7 +38,13 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDto savePatients(PatientRequest patient) {
         PatientEntity patientEntity= patientMapper.toPatient(patient);
-        HistoryEntity history= new HistoryEntity(null,LocalDate.now(),patientEntity, Collections.emptySet());
+
+        HistoryEntity history= HistoryEntity.builder()
+                .date(LocalDate.now())
+                .patient(patientEntity)
+                .consultations(Collections.emptySet())
+                .build();
+
         patientEntity.setHistoryEntity(history);
         patientRepository.save(patientEntity);
         return patientMapper.toPatientDto(patientEntity);
