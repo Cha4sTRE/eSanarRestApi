@@ -14,7 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/esanar/api/v1/patients")
 @RequiredArgsConstructor
 @PreAuthorize("permitAll()")
 public class PatientController {
@@ -32,7 +32,7 @@ public class PatientController {
 
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/patient/{id}")
     public ResponseEntity<PatientDto> findPatientById(@PathVariable Long id) {
         PatientDto patientDto= patientService.findPatientsById(id);
         return new ResponseEntity<>(patientDto, HttpStatus.OK);

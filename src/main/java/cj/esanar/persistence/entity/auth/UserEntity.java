@@ -20,21 +20,27 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String email;
+    private String password;
+
+    @Column(unique = true)
+    private Long identifier;
+
     @Column(name = "username",unique = true)
     private String username;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "email",length = 50)
-    private String email;
+
     @Column(name = "phone-number")
     private Long phoneNumber;
 
     @Column(name = "enabled")
     private boolean isEnabled;
+
     @Column(name = "account_non_expired")
     private boolean isAccountNonExpired;
+
     @Column(name = "account_non_locked")
     private boolean isAccountNonLocked;
+
     @Column(name = "credentials_non_expired")
     private boolean isCredentialsNonExpired;
 

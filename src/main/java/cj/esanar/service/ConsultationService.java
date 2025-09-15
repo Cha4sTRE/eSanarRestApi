@@ -1,17 +1,16 @@
 package cj.esanar.service;
 
-import cj.esanar.persistence.entity.ConsultationEntity;
+import cj.esanar.service.dtos.in.ConsultationRequest;
 import cj.esanar.service.dtos.out.ConsultationDto;
-import org.springframework.http.ResponseEntity;
 
-import java.util.Set;
+import java.util.List;
 
 
 public interface ConsultationService {
 
-   ResponseEntity<Set<ConsultationDto>> listConsultations();
+   List<ConsultationDto> listConsultations();
+   ConsultationDto findConsultationById(Long id);
 
-   ResponseEntity<ConsultationDto> saveConsultation(ConsultationEntity consulta);
-   ResponseEntity<ConsultationDto> findConsultationtById(ConsultationEntity consulta);
+    ConsultationDto saveConsultation(ConsultationRequest consultationRequest);
 
 }

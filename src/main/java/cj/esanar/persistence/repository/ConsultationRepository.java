@@ -2,24 +2,13 @@ package cj.esanar.persistence.repository;
 
 import cj.esanar.persistence.entity.ConsultationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Set;
+
 @Repository
 public interface ConsultationRepository extends JpaRepository<ConsultationEntity,Long> {
-   /* @Query("""
-    SELECT c FROM EvaluationEntity c
-    WHERE c.historiaClinica.id = :id
-    """)
-    Page<EvaluationEntity> findAllById(Pageable pageable, Long id);
 
-    @Query("""
-    SELECT c FROM EvaluationEntity c
-    WHERE c.historiaClinica.id = :id
-    AND (
-        LOWER(c.motivoConsulta) LIKE LOWER(CONCAT('%', :filtro, '%'))
-        OR LOWER(c.diagnosticoPrincipal) LIKE LOWER(CONCAT('%', :filtro, '%'))
-        OR LOWER(c.enfermera.username) LIKE LOWER(CONCAT('%', :filtro, '%'))
-    )
-""")
-    Page<EvaluationEntity> findAllById(Pageable pageable, Long id, @Param("filtro") String filtro);
-*/
+
 }

@@ -40,12 +40,12 @@ public class PatientServiceImpl implements PatientService {
         PatientEntity patientEntity= patientMapper.toPatient(patient);
 
         HistoryEntity history= HistoryEntity.builder()
-                .date(LocalDate.now())
+                .creationDate(LocalDate.now())
                 .patient(patientEntity)
                 .consultations(Collections.emptySet())
                 .build();
 
-        patientEntity.setHistoryEntity(history);
+        patientEntity.setHistory(history);
         patientRepository.save(patientEntity);
         return patientMapper.toPatientDto(patientEntity);
     }

@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 @Entity
-@Table(name = "patients")
+@Table(name = "patient")
 public class PatientEntity {
 
     @Id
@@ -65,8 +65,8 @@ public class PatientEntity {
     @NotNull
     private MaritalStatus maritalStatus;
 
-
-    @OneToOne(mappedBy = "patient", orphanRemoval = true,cascade = CascadeType.PERSIST)
-    private HistoryEntity historyEntity;
+    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_history")
+    private HistoryEntity history;
 
 }

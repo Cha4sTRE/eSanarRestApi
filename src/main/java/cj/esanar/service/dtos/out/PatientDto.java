@@ -22,6 +22,6 @@ public class PatientDto {
     private String occupation;
     private String eps;
     private String maritalStatus;
-
+    private HistoryDto history;
 
 }

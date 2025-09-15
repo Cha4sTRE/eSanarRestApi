@@ -8,9 +8,7 @@ import java.util.List;
 
 public interface HistoryService {
 
-    ResponseEntity<List<HistoryDto>> listHistory();
-    ResponseEntity<HistoryDto> findHistoryById(Long id);
-    ResponseEntity<HistoryDto> saveHistory(HistoryEntity historia);
-
+    List<HistoryDto> listHistory();
+    HistoryDto findHistoryById(Long id);
 
 }

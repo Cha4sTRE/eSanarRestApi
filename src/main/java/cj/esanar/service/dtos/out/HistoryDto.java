@@ -1,11 +1,14 @@
 package cj.esanar.service.dtos.out;
 
-import java.time.LocalDate;
 
+import lombok.Data;
+
+import java.util.Set;
+
+@Data
 public class HistoryDto {
 
-    private LocalDate creationDate;
-    private PatientDto patient;
-    private int consutls;
+    private String creationDate;
+    private Set<ConsultationDto> consultations;
 
 }

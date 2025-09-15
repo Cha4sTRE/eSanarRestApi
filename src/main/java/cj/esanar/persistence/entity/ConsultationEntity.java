@@ -47,7 +47,7 @@ public class ConsultationEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_nurse")
-    private UserEntity enfermera;
+    private UserEntity nurse;
 
     ///
     /// Atributo que relaciona {@link HistoryEntity} con muchas consultas, esta relacion es de **Muchos a Uno**

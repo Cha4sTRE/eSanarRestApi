@@ -13,22 +13,26 @@ import java.util.Set;
 @Setter
 @Builder
 @Entity
-@Table(name = "stories")
+@Table(name = "history")
 public class HistoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate date;
+    private LocalDate creationDate;
 
-    /// {@link PatientEntity} relacionado con esta historia
-    @OneToOne(cascade =CascadeType.MERGE, orphanRemoval = true)
-    @JoinColumn(name = "id_paciente", nullable = false)
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_patient", nullable = false)
     private PatientEntity patient;
 
 
     @OneToMany(mappedBy = "clinicalHistory", orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<ConsultationEntity> consultations = new HashSet<>();
 
+    public void addConsultations(ConsultationEntity consultation) {
+        this.consultations.add(consultation);
+        consultation.setClinicalHistory(this);
+    }
 
 }
