@@ -9,11 +9,11 @@ import java.time.LocalTime;
 @Data
 public class ConsultationDto {
 
-    private UserDto nurse;
+    private UserDto attendedBy;
     private String primaryDiagnosis;
     private String motive;
-    private Integer length;
-    private Integer width;
+    private Double length;
+    private Double width;
     private String depth;
     private String form;
     private String smell;

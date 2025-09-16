@@ -20,8 +20,8 @@ public class ConsultationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String motive;
-    private Integer length;
-    private Integer width;
+    private Double length;
+    private Double width;
     private String depth;
     private String form;
     private String smell;
@@ -47,12 +47,8 @@ public class ConsultationEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_nurse")
-    private UserEntity nurse;
+    private UserEntity attendedBy;
 
-    ///
-    /// Atributo que relaciona {@link HistoryEntity} con muchas consultas, esta relacion es de **Muchos a Uno**
-    /// ósea que **muchas** consultas pertenecen a **una** historia
-    ///
     @ManyToOne
     @JoinColumn(name = "id_historia", nullable = false)
     private HistoryEntity clinicalHistory;

@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -45,7 +44,7 @@ public class ConsultationServiceImpl implements ConsultationService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         csEntity.setServiceDate(LocalDateTime.parse(formatter.format(LocalDateTime.now()), formatter));
         csEntity.setFinalTime(LocalTime.now());
-        Long id= consultationRequest.consultationHistoryRequest().patientHistoryRequest().id();
+        Long id= consultationRequest.history().patient().id();
         PatientEntity patient=patientRepository.findById(id).orElse(null);
         patient.getHistory().addConsultations(csEntity);
         consultaRepository.save(csEntity);
