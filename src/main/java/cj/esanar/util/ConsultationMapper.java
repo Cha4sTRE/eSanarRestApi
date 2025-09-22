@@ -1,8 +1,10 @@
 package cj.esanar.util;
 
 import cj.esanar.persistence.entity.ConsultationEntity;
+import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.service.dtos.in.ConsultationRequest;
 import cj.esanar.service.dtos.out.ConsultationDto;
+import cj.esanar.service.dtos.out.UserDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
@@ -17,6 +19,7 @@ public interface ConsultationMapper {
     ConsultationEntity toEntity(ConsultationRequest consultationRequest);
     ConsultationDto toDto(ConsultationEntity csEntity);
     List<ConsultationDto> toDto(List<ConsultationEntity> csEntity);
+    UserDto toUserDto(UserEntity user);
 
     default String dateToString(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

@@ -29,6 +29,14 @@ public class CommandInit {
                     .name(ERole.ADMIN)
                     .listaPermisos(Set.of(created,read,update,delete))
                     .build();
+            RoleEntity medic= RoleEntity.builder()
+                    .name(ERole.MEDIC)
+                    .listaPermisos(Set.of(created,read,update))
+                    .build();
+            RoleEntity enf= RoleEntity.builder()
+                    .name(ERole.ENF)
+                    .listaPermisos(Set.of(created,read))
+                    .build();
 
             UserEntity user= UserEntity.builder()
                     .name("Jefferson")
@@ -37,7 +45,7 @@ public class CommandInit {
                     .identifier(1092524589L)
                     .phoneNumber(3166846822L)
                     .password(passwordEncoder.encode("milluh123"))
-                    .roles(Set.of(admin))
+                    .roles(Set.of(admin,medic,enf))
                     .isEnabled(true)
                     .isAccountNonExpired(true)
                     .isCredentialsNonExpired(true)

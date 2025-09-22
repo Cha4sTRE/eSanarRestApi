@@ -41,7 +41,7 @@ public class PatientController {
     }
 
     @PostMapping("/new")
-    @PreAuthorize("hasAuthority('CREATE')")
+    @PreAuthorize("hasRole('MEDIC')")
     public ResponseEntity<PatientDto> newPatient(@RequestBody @Valid PatientRequest patient) {
         PatientDto patientDto=patientService.savePatients(patient);
         return new ResponseEntity<>(patientDto, HttpStatus.CREATED);
