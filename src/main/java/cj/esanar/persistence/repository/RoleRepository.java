@@ -1,15 +1,14 @@
 package cj.esanar.persistence.repository;
 
-import cj.esanar.persistence.entity.auth.ERole;
 import cj.esanar.persistence.entity.auth.RoleEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
+public interface RoleRepository extends CrudRepository<RoleEntity, Long> {
 
-    Optional<RoleEntity> findByName(ERole name);
+    List<RoleEntity> findRoleEntitiesByNameIn(List<String> roleList);
 
 }

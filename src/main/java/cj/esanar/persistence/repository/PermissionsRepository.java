@@ -1,12 +1,12 @@
 package cj.esanar.persistence.repository;
 
-import cj.esanar.persistence.entity.auth.PermissionsEntity;
+import cj.esanar.persistence.entity.auth.PermissionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface PermissionsRepository extends JpaRepository<PermissionsEntity, Long> {
-    Optional<PermissionsEntity> findByName(String name);
+public interface PermissionsRepository extends JpaRepository<PermissionEntity, Long> {
+    Optional<PermissionEntity> findByName(String name);
 }

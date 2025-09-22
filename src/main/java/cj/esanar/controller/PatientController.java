@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/esanar/api/v1/patients")
 @RequiredArgsConstructor
-@PreAuthorize("permitAll()")
+@PreAuthorize("denyAll()")
 public class PatientController {
 
     private final PatientService patientService;
 
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<Page<PatientDto>> newPatient(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
                                                        @RequestParam(name = "size",defaultValue = "3") int pageSize) {
 
@@ -33,12 +34,14 @@ public class PatientController {
     }
 
     @GetMapping("/patient/{id}")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<PatientDto> findPatientById(@PathVariable Long id) {
         PatientDto patientDto= patientService.findPatientsById(id);
         return new ResponseEntity<>(patientDto, HttpStatus.OK);
     }
 
     @PostMapping("/new")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<PatientDto> newPatient(@RequestBody @Valid PatientRequest patient) {
         PatientDto patientDto=patientService.savePatients(patient);
         return new ResponseEntity<>(patientDto, HttpStatus.CREATED);

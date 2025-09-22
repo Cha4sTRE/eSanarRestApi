@@ -28,5 +28,5 @@ public class RoleEntity {
     @JoinTable(name = "role_permissions",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private Set<PermissionsEntity> listaPermisos = new HashSet<>();
+    private Set<PermissionEntity> listaPermisos = new HashSet<>();
 }

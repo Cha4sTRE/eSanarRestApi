@@ -37,4 +37,15 @@ public class ConsultationController {
         return new ResponseEntity<>(consultation, HttpStatus.OK);
 
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ConsultationDto> updateConsultation(@PathVariable Long id,
+                                                              @RequestBody @Valid ConsultationRequest consultationRequest){
+        return null;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteConsultation(@PathVariable Long id){
+        return null;
+    }
 }

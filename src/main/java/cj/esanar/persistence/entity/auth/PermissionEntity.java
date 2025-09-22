@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "permissions")
-public class PermissionsEntity {
+public class PermissionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,6 +11,7 @@ public interface ConsultationService {
    List<ConsultationDto> listConsultations();
    ConsultationDto findConsultationById(Long id);
 
-    ConsultationDto saveConsultation(ConsultationRequest consultationRequest);
-
+   ConsultationDto saveConsultation(ConsultationRequest consultationRequest);
+   ConsultationDto updateConsultation(ConsultationRequest consultationRequest);
+   Void deleteConsultationById(Long id);
 }
