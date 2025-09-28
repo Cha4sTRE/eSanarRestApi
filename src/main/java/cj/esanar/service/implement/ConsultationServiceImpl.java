@@ -5,9 +5,11 @@ import cj.esanar.persistence.entity.PatientEntity;
 import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.persistence.repository.ConsultationRepository;
 import cj.esanar.persistence.repository.PatientRepository;
+import cj.esanar.persistence.repository.UserRepository;
 import cj.esanar.service.ConsultationService;
 import cj.esanar.service.dtos.in.ConsultationRequest;
 import cj.esanar.service.dtos.out.ConsultationDto;
+import cj.esanar.service.dtos.out.UserDto;
 import cj.esanar.util.ConsultationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +27,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final ConsultationRepository consultaRepository;
     private final PatientRepository patientRepository;
     private final ConsultationMapper consultationMapper;
+    private final UserRepository userRepository;
 
     @Override
     public List<ConsultationDto> listConsultations() {
@@ -42,14 +45,18 @@ public class ConsultationServiceImpl implements ConsultationService {
     @Override
     public ConsultationDto saveConsultation(ConsultationRequest consultationRequest) {
         ConsultationEntity csEntity= consultationMapper.toEntity(consultationRequest);
-
+        //crea y registra la fecha en la entidad
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         csEntity.setServiceDate(LocalDateTime.parse(formatter.format(LocalDateTime.now()), formatter));
         csEntity.setFinalTime(LocalTime.now());
-
+        //busca y asigna al paciente previamente creado a esta consulta
         Long id= consultationRequest.history().patient().id();
         PatientEntity patient=patientRepository.findById(id).orElse(null);
         patient.getHistory().addConsultations(csEntity);
+        //busca y asigna el usario que creo la consulta
+        String username= SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user= userRepository.findByUsername(username).orElse(null);
+        csEntity.setAttendedBy(user);
 
         consultaRepository.save(csEntity);
         patientRepository.save(patient);

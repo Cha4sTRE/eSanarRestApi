@@ -44,6 +44,7 @@ public class CommandInit {
                     .username("jeffer")
                     .identifier(1092524589L)
                     .phoneNumber(3166846822L)
+                    .email("chaustrejefferson@gmail.com")
                     .password(passwordEncoder.encode("milluh123"))
                     .roles(Set.of(admin,medic,enf))
                     .isEnabled(true)
