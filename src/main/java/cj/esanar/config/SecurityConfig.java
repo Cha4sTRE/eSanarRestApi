@@ -43,20 +43,6 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    //proveedor de autenticacion para el autenticationManager
-    @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetalService){
-
-        //proveedor de autenticacioon DAO: database acces object
-        DaoAuthenticationProvider daoProvider= new DaoAuthenticationProvider();
-        //componentes obligatorios
-        daoProvider.setPasswordEncoder(passwordEncoder());
-        daoProvider.setUserDetailsService(userDetalService);
-
-        return daoProvider;
-    }
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

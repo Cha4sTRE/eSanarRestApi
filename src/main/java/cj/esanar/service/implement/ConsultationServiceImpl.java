@@ -9,7 +9,6 @@ import cj.esanar.persistence.repository.UserRepository;
 import cj.esanar.service.ConsultationService;
 import cj.esanar.service.dtos.in.ConsultationRequest;
 import cj.esanar.service.dtos.out.ConsultationDto;
-import cj.esanar.service.dtos.out.UserDto;
 import cj.esanar.util.ConsultationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
