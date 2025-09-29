@@ -19,8 +19,4 @@ public class PermissionEntity {
     @Column(nullable = false, unique = false,updatable = false)
     private String name;
 
-    @Override
-    public String toString() {
-        return name;
-    }
 }
