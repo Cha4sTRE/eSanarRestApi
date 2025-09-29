@@ -11,10 +11,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        format_sql: true
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
   test:
     database:
       replace: any
