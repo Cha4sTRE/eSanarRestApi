@@ -35,7 +35,6 @@ public class PatientEntity {
     private Long identification;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     private Gender gender;
 
     @Column(name = "first_name", nullable = false, length = 50)
@@ -46,7 +45,6 @@ public class PatientEntity {
 
     @Column(name = "document_type", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
-    @NotNull
     private DocumentType documentType;
 
     @Column(name = "phone_number", nullable = false, length = 20)
@@ -57,12 +55,10 @@ public class PatientEntity {
 
     @Column(name = "blood_type", nullable = false, length = 5)
     @Enumerated(EnumType.STRING)
-    @NotNull
     private BloodType bloodType;
 
     @Column(name = "marital_status", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
-    @NotNull
     private MaritalStatus maritalStatus;
 
     @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
