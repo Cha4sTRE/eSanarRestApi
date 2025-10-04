@@ -4,6 +4,7 @@ package cj.esanar.service.dtos.in;
 import cj.esanar.persistence.entity.enums.BloodType;
 import cj.esanar.persistence.entity.enums.DocumentType;
 import cj.esanar.persistence.entity.enums.Gender;
+import cj.esanar.persistence.entity.enums.MaritalStatus;
 import jakarta.validation.constraints.*;
 
 public record PatientRequest(
@@ -58,5 +59,5 @@ public record PatientRequest(
         String eps,
 
         @NotNull(message = "El estado civil es obligatorio")
-        String maritalStatus
+        MaritalStatus maritalStatus
 ) {}
