@@ -1,15 +1,10 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.persistence.entity.HistoryEntity;
 import cj.esanar.persistence.entity.PatientEntity;
-import cj.esanar.persistence.entity.enums.BloodType;
-import cj.esanar.persistence.entity.enums.DocumentType;
-import cj.esanar.persistence.entity.enums.Gender;
-import cj.esanar.persistence.entity.enums.MaritalStatus;
 import cj.esanar.persistence.repository.PatientRepository;
-import cj.esanar.service.dtos.in.PatientRequest;
 import cj.esanar.service.dtos.out.PatientDto;
 import cj.esanar.util.PatientMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
 
-import java.time.LocalDate;
+import java.util.Optional;
 
 import static cj.esanar.dataProviders.DataProviderPatient.*;
 import static org.assertj.core.api.Assertions.*;
@@ -39,6 +34,7 @@ class PatientServiceImplTest {
     @InjectMocks
     PatientServiceImpl patientServiceImpl;
 
+    @DisplayName("Test para guardar un paciente")
     @Test
     void testSavePatients(){
 
@@ -58,6 +54,7 @@ class PatientServiceImplTest {
         verify(patientMapper).toPatientDto(any(PatientEntity.class));
     }
 
+    @DisplayName("Test para buscar lista de pacientes")
     @Test
     void testListPatients() {
         //Given
@@ -78,10 +75,19 @@ class PatientServiceImplTest {
 
 
     }
-
+    @DisplayName("Test para buscar un paciente por id")
     @Test
     void findPatientsById() {
 
+        when(patientRepository.findById(anyLong())).thenReturn(Optional.of(patient1()));
+        when(patientMapper.toPatientDto(any(PatientEntity.class))).thenReturn(dto1());
+
+        PatientDto result= patientServiceImpl.findPatientsById(anyLong());
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(dto1());
+
+        verify(patientMapper).toPatientDto(any(PatientEntity.class));
+        verify(patientRepository).findById(anyLong());
 
     }
 
