@@ -3,6 +3,7 @@ package cj.esanar.service.implement.security;
 import cj.esanar.persistence.repository.RoleRepository;
 import cj.esanar.persistence.repository.UserRepository;
 import cj.esanar.util.JwtUtil;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,6 +35,7 @@ class UserDetailServiceImplTest {
     @InjectMocks
     private UserDetailServiceImpl userDetailServiceImpl;
 
+    @DisplayName("Test para cargar usuario por su username")
     @Test
     void testLoadUserByUsername() {
 
@@ -48,7 +50,7 @@ class UserDetailServiceImplTest {
                 .containsExactlyInAnyOrder("CREATE","DELETE","READ","ROLE_ADMIN","UPDATE");
 
     }
-
+    @DisplayName("Test que comprueba que la excepcion de usuario no encontrado funciona")
     @Test
     void testLoadUserByUsernameNotFoundException() {
         String username= "jeffer";
