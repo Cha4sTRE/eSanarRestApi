@@ -71,9 +71,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private Authentication authenticate(String username, String password) {
 
         UserDetails userDetails= this.loadUserByUsername(username);
-
-        if (userDetails==null) throw new BadCredentialsException("Invalid username or password");
-        if(!passwordEncoder.matches(password,userDetails.getPassword())) throw new BadCredentialsException("Invalid password");
+        
+        if(!passwordEncoder.matches(password,userDetails.getPassword()))
+            throw new BadCredentialsException("Invalid password");
 
         return new UsernamePasswordAuthenticationToken(userDetails,password,userDetails.getAuthorities());
 
