@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-public class DataProviderPatient {
+public class PatientsDataProvider {
 
     private static PatientEntity patient1;
     private static PatientEntity patient2;

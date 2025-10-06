@@ -19,7 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
-import static cj.esanar.dataProviders.DataProviderPatient.*;
+import static cj.esanar.dataProviders.PatientsDataProvider.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
