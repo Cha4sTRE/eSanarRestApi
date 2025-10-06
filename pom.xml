@@ -84,6 +84,47 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+
+                <executions>
+                    <!-- Ejecuta JaCoCo al hacer 'test' -->
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- Genera el reporte después de los tests -->
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/config/**</exclude>
+                                <exclude>**/util/**</exclude>
+                                <exclude>**/entity/**</exclude>
+                                <exclude>**/dtos/**</exclude>
+                                <exclude>**/util/**</exclude>
+                            </excludes>
+
+                            <includes>
+                                <!-- Solo incluir los paquetes clave -->
+                                <include>**/controller/**</include>
+                                <include>**/service/**</include>
+                                <include>**/persistence/repository/**</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+
+
+            </plugin>
             <!--  Pluguin para anotaciones de Lombok y Map Struct -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
