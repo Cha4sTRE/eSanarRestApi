@@ -40,4 +40,5 @@ public class UserDetailsDataProvider {
     public static UserEntity userAdmin(){
         return userAdmin;
     }
+    public static RoleEntity roleAdmin(){return admin;}
 }
