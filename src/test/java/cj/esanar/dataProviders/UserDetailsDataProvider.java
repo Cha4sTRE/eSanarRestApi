@@ -4,7 +4,10 @@ import cj.esanar.persistence.entity.auth.ERole;
 import cj.esanar.persistence.entity.auth.PermissionEntity;
 import cj.esanar.persistence.entity.auth.RoleEntity;
 import cj.esanar.persistence.entity.auth.UserEntity;
+import cj.esanar.service.dtos.in.auth.AuthCreateRoleRequest;
+import cj.esanar.service.dtos.in.auth.AuthCreateUserRequest;
 
+import java.util.List;
 import java.util.Set;
 
 public class UserDetailsDataProvider {
@@ -15,6 +18,7 @@ public class UserDetailsDataProvider {
     private static PermissionEntity delete;
     private static RoleEntity admin;
     private static UserEntity userAdmin;
+    private static AuthCreateUserRequest  createUserRequest;
 
     static{
         create= PermissionEntity.builder().name("CREATE").build();
@@ -36,9 +40,12 @@ public class UserDetailsDataProvider {
                 .isCredentialsNonExpired(true)
                 .isAccountNonLocked(true)
                 .build();
+        createUserRequest= new AuthCreateUserRequest("Luz","Angelica","angelica@gmail.com",
+                109584652L,32564856L,"angelica","camila123",new AuthCreateRoleRequest(List.of("ADMIN")));
     }
     public static UserEntity userAdmin(){
         return userAdmin;
     }
     public static RoleEntity roleAdmin(){return admin;}
+    public static AuthCreateUserRequest createUserRequest(){return createUserRequest;}
 }

@@ -92,7 +92,7 @@ class UserDetailServiceImplTest {
 
 
     }
-    @DisplayName("Test que prueba la excepcion de contraseña incorrecta")
+    @DisplayName("Test que comprueba la excepcion de usuario no encontrado")
     @Test
     void testLoginUserBadCredentialsException() {
         String username= "john";
@@ -108,6 +108,7 @@ class UserDetailServiceImplTest {
 
     }
 
+    @DisplayName("Test que comprueba la excepcion de contraseña incorrecta")
     @Test
     void testLoginInvalidPasswordException(){
         String username= "jeffer";
@@ -122,5 +123,29 @@ class UserDetailServiceImplTest {
         assertThatThrownBy(()->userDetailServiceImpl.loginUser(authLoginRequest))
                 .isInstanceOf(BadCredentialsException.class)
                 .hasMessage("Invalid password");
+    }
+    @DisplayName("Test para el metodo de crear nuevo usuario")
+    @Test
+    void testCreateUser() {
+
+        RoleEntity roleEntity = roleAdmin();
+
+        when(roleRepository.findRoleEntitiesByNameIn(List.of("ADMIN"))).thenReturn(List.of(roleEntity));
+        when(passwordEncoder.encode("camila123")).thenReturn("passEncode");
+        when(userRepository.save(any(UserEntity.class))).thenAnswer(i -> i.getArgument(0));
+        when(jwtUtil.generateToken(any(Authentication.class))).thenReturn("fake-token");
+
+        AuthResponse authResponse = userDetailServiceImpl.createUser(createUserRequest());
+        assertThat(authResponse).isNotNull();
+        assertThat(authResponse.username()).isEqualTo(createUserRequest().username());
+        assertThat(authResponse.jwt()).isEqualTo("fake-token");
+        assertThat(authResponse.message()).isEqualTo("user created");
+
+        verify(roleRepository).findRoleEntitiesByNameIn(List.of(ERole.ADMIN.name()));
+        verify(userRepository).save(any(UserEntity.class));
+        verify(jwtUtil).generateToken(any(Authentication.class));
+        verify(passwordEncoder).encode("camila123");
+
+
     }
 }
