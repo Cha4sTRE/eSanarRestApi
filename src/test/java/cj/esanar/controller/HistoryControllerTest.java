@@ -5,6 +5,7 @@ import cj.esanar.service.HistoryService;
 import cj.esanar.service.dtos.out.HistoryDto;
 import cj.esanar.service.implement.HistoryServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,9 @@ class HistoryControllerTest {
             return Mockito.mock(HistoryServiceImpl.class);
         }
     }
-
+    @DisplayName("Test para buscar historias en HTTP")
     @Test
-    void findAllStories() throws Exception {
+    void testFindAllStories() throws Exception {
         List<HistoryDto> historyEntityList = List.of(historyDto());
         when(historyService.listHistory()).thenReturn(historyEntityList);
         mockMvc.perform(get("/esanar/api/v1/stories/list"))
@@ -53,9 +54,9 @@ class HistoryControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[0].creationDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
     }
-
+    @DisplayName("Test para buscar historia por id en HTTP")
     @Test
-    void findHistoryById() throws Exception {
+    void testFindHistoryById() throws Exception {
 
         HistoryDto historyDto = historyDto();
         when(historyService.findHistoryById(anyLong())).thenReturn(historyDto);

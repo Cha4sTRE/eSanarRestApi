@@ -6,6 +6,7 @@ import cj.esanar.service.dtos.out.PatientDto;
 import cj.esanar.service.implement.PatientServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ class PatientControllerTest {
             return Mockito.mock(PatientServiceImpl.class);
         }
     }
-
+    @DisplayName("Test para traer la paginacion de pacientes con GET")
     @Test
     void testListPatients() throws Exception {
 
@@ -64,9 +65,9 @@ class PatientControllerTest {
                 .andExpect(jsonPath("$.content[0].firstName").value("jefferson"));
 
     }
-
+    @DisplayName("Test para buscar paciente con GET")
     @Test
-    void findPatientById() throws Exception {
+    void testFindPatientById() throws Exception {
 
         PatientDto patientDto = dto1();
         when(patientService.findPatientsById(anyLong())).thenReturn(patientDto);
@@ -77,7 +78,7 @@ class PatientControllerTest {
                 .andExpect(jsonPath("$.firstName").value(patientDto.getFirstName()));
 
     }
-
+    @DisplayName("Test para crear un nuevo paciente con POST")
     @Test
     void testNewPatients() throws Exception {
 
