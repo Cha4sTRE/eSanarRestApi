@@ -23,7 +23,7 @@ public class PatientController {
 
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('READ')")
-    public ResponseEntity<Page<PatientDto>> newPatient(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+    public ResponseEntity<Page<PatientDto>> listPatients(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
                                                        @RequestParam(name = "size",defaultValue = "3") int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
