@@ -1,6 +1,5 @@
 package cj.esanar.controller;
 
-import cj.esanar.persistence.entity.HistoryEntity;
 import cj.esanar.service.HistoryService;
 import cj.esanar.service.dtos.out.HistoryDto;
 import cj.esanar.service.implement.HistoryServiceImpl;

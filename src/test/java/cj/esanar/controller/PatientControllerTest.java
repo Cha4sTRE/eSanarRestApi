@@ -4,7 +4,6 @@ import cj.esanar.service.PatientService;
 import cj.esanar.service.dtos.in.PatientRequest;
 import cj.esanar.service.dtos.out.PatientDto;
 import cj.esanar.service.implement.PatientServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
