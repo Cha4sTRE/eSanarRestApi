@@ -85,6 +85,7 @@ class RoleRepositoryTest {
         Optional<RoleEntity> roleEntity= roleRepository.findById(testRole.getId());
         assertThat(roleEntity.isPresent()).isFalse();
     }
+    @DisplayName("Test para buscar una lista de roles por una lista de sus nombres")
     @Test
     void testFindRoleEntitiesByNameIn(){
         roleRepository.saveAll(List.of(admin,enf,medic,visitor));

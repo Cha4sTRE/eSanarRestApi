@@ -43,7 +43,7 @@ class HistoryControllerTest {
             return Mockito.mock(HistoryServiceImpl.class);
         }
     }
-    @DisplayName("Test para buscar historias en HTTP")
+    @DisplayName("Test para buscar historias con GET")
     @Test
     void testFindAllStories() throws Exception {
         List<HistoryDto> historyEntityList = List.of(historyDto());
@@ -53,7 +53,7 @@ class HistoryControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[0].creationDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
     }
-    @DisplayName("Test para buscar historia por id en HTTP")
+    @DisplayName("Test para buscar historia por id con GET")
     @Test
     void testFindHistoryById() throws Exception {
 
