@@ -1,7 +1,9 @@
 package cj.esanar.controller;
 
 import cj.esanar.service.ConsultationService;
+import cj.esanar.service.dtos.in.ConsultationRequest;
 import cj.esanar.service.dtos.out.ConsultationDto;
+import cj.esanar.service.implement.ConsultationServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,12 +16,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static cj.esanar.dataProviders.ConsultationDataProvider.consultationDto;
+import static cj.esanar.dataProviders.ConsultationDataProvider.*;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ConsultationController.class)
@@ -37,10 +43,11 @@ class ConsultationControllerTest {
     @TestConfiguration
     static class consultationServiceConfigure{
         @Bean
-        public ConsultationService consultationService(){
-            return Mockito.mock(ConsultationService.class);
+        ConsultationService consultationService(){
+            return Mockito.mock(ConsultationServiceImpl.class);
         }
     }
+
     @DisplayName("Test para buscar consultas con GET")
     @Test
     void tesFindAllConsultations() throws Exception {
@@ -65,19 +72,55 @@ class ConsultationControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.primaryDiagnosis").value("diagnostico de prueba"));
     }
-
+    @DisplayName("Test para guardar nueva consulta con POST")
     @Test
-    void testNewConsultation() {
+    void testNewConsultation() throws Exception {
 
+        ConsultationDto testConsultationSave = consultationDto();
+        ConsultationRequest consultationRequest = consultationRequest();
+        testConsultationSave.setMotive(consultationRequest.motive());
 
+        when(consultationService.saveConsultation(consultationRequest)).thenReturn(testConsultationSave);
+
+        mockMvc.perform(post("/esanar/api/v1/consultations/new")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(consultationRequest)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.motive").value("prueba de nueva consulta"))
+                .andExpect(jsonPath("$.serviceDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))))
+                .andExpect(jsonPath("$.finalTime").value(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))));
 
     }
 
+    @DisplayName("Test para actualizar una consulta con PUT")
     @Test
-    void updateConsultation() {
+    void updateConsultation() throws Exception {
+
+        ConsultationDto testConsultationSave = consultationDto();
+        ConsultationRequest consultationRequest = consultationRequestUpdate();
+        testConsultationSave.setMotive(consultationRequest.motive());
+
+        when(consultationService.updateConsultation(consultationRequest,1L)).thenReturn(testConsultationSave);
+
+        mockMvc.perform(put("/esanar/api/v1/consultations/update/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(consultationRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.motive").value("prueba de actualizar consulta"))
+                .andExpect(jsonPath("$.serviceDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))))
+                .andExpect(jsonPath("$.finalTime").value(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))));
+
     }
 
+    @DisplayName("Test para eliminar una consulta con DELETE")
     @Test
-    void deleteConsultation() {
+    void deleteConsultation() throws Exception {
+
+        Long id = 1L;
+        doNothing().when(consultationService).deleteConsultationById(id);
+        mockMvc.perform(delete("/esanar/api/v1/consultations/delete/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("patient delete"));
+
     }
 }

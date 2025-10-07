@@ -38,7 +38,7 @@ public class ConsultationController {
     public ResponseEntity<ConsultationDto> newConsultation(@RequestBody @Valid ConsultationRequest consultationRequest) {
 
         ConsultationDto consultation= consultationService.saveConsultation(consultationRequest);
-        return new ResponseEntity<>(consultation, HttpStatus.OK);
+        return new ResponseEntity<>(consultation, HttpStatus.CREATED);
 
     }
 
