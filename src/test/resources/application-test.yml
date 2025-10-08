@@ -16,10 +16,4 @@ spring:
   test:
     database:
       replace: any
-  security:
-    jwt:
-      private:
-        key: df077d8f28a73a9350111cf6832caf1d1a03353748f1ed02e2d1d91dae7ff121
-    user:
-      generator: restSanarJWT
 
