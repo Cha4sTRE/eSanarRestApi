@@ -9,6 +9,7 @@ import java.time.LocalTime;
 @Data
 public class ConsultationDto {
 
+    private Long id;
     private UserDto attendedBy;
     private String primaryDiagnosis;
     private String motive;

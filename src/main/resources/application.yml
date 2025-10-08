@@ -4,9 +4,9 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: enfsanar
-    password: enf123
-    url: jdbc:postgresql://localhost:5433/enf_sanar
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
   jpa:
     properties:
       hibernate:
@@ -17,7 +17,7 @@ spring:
   security:
     jwt:
       private:
-        key: df077d8f28a73a9350111cf6832caf1d1a03353748f1ed02e2d1d91dae7ff121
+        key: ${JWT_KEY}
     user:
-      generator: restSanarJWT
+      generator: ${JWT_USER}
 

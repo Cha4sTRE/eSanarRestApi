@@ -1,6 +1,8 @@
 package cj.esanar.util;
 
+import cj.esanar.persistence.entity.ConsultationEntity;
 import cj.esanar.persistence.entity.HistoryEntity;
+import cj.esanar.service.dtos.out.ConsultationDto;
 import cj.esanar.service.dtos.out.HistoryDto;
 import org.mapstruct.Mapper;
 
@@ -12,6 +14,7 @@ import java.util.List;
 public interface HistoryMapper {
 
     HistoryDto toHistoryDto(HistoryEntity history);
+    ConsultationDto toConsultationDto(ConsultationEntity consultation);
     List<HistoryDto> toHistoryDto(List<HistoryEntity> history);
 
     default String localDateToString(LocalDate date){
