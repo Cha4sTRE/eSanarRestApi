@@ -57,3 +57,8 @@ Esta versión forma parte de la materia **Codificación y Pruebas de Software** 
 - Seguridad:
     - Autenticación y autorización basada en roles y permisos.
 
+---
+
+## Reporte de cobertura de pruebas (jacoco)
+
+<img width="1162" height="267" alt="reporte tests" src="https://github.com/user-attachments/assets/f129626d-d607-4d7f-9481-fb87f44e11aa" />
