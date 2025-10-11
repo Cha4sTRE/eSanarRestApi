@@ -94,22 +94,5 @@ class HistoryServiceTest {
         verify(historyMapper).toHistoryDto(entity);
     }
 
-    // ----------- TEST: Buscar historia por ID no existente -----------
-    /*
-    @DisplayName("Test para buscar una historia clínica por ID inexistente")
-    @Test
-    void testFindHistoryById_NotFound() {
-        // Given
-        when(historyRepository.findById(99L)).thenReturn(Optional.empty());
-
-        // When
-        HistoryDto result = historyService.findHistoryById(99L);
-
-        // Then
-        assertThat(result).isNull();
-
-        verify(historyRepository).findById(99L);
-        verify(historyMapper, never()).toHistoryDto((HistoryEntity) any());
-    }
-    */
+    
 }
