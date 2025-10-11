@@ -41,6 +41,7 @@ public class PatientsDataProvider {
                 .address("calle 15")
                 .neighborhood("Niza")
                 .occupation("Estudiante")
+                .history(HistoryEntity.builder().build())
                 .build();
         patient2= PatientEntity.builder()
                 .documentType(DocumentType.CC)

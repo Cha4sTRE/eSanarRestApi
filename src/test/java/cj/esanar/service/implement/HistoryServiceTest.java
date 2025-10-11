@@ -12,9 +12,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import static cj.esanar.dataProviders.ConsultationDataProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -35,21 +37,13 @@ class HistoryServiceTest {
     @Test
     void testListHistory() {
         // Given
-        HistoryEntity history1 = new HistoryEntity();
-        history1.setId(1L);
-        history1.setCreationDate(LocalDate.of(2024, 5, 10));
-
-        HistoryEntity history2 = new HistoryEntity();
-        history2.setId(2L);
-        history2.setCreationDate(LocalDate.of(2024, 6, 15));
+        HistoryEntity history1= history();
+        HistoryEntity history2= history();
 
         List<HistoryEntity> entityList = List.of(history1, history2);
 
-        HistoryDto dto1 = new HistoryDto();
-        dto1.setCreationDate("10-05-2024");
-
-        HistoryDto dto2 = new HistoryDto();
-        dto2.setCreationDate("15-06-2024");
+       HistoryDto dto1 = historyDto();
+       HistoryDto dto2 = historyDto();
 
         List<HistoryDto> dtoList = List.of(dto1, dto2);
 
@@ -62,7 +56,7 @@ class HistoryServiceTest {
         // Then
         assertThat(result).isNotNull();
         assertThat(result).hasSize(2);
-        assertThat(result.get(0).getCreationDate()).isEqualTo("10-05-2024");
+        assertThat(result.get(0).getCreationDate()).isEqualTo(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 
         verify(historyRepository).findAll();
         verify(historyMapper).toHistoryDto(entityList);
@@ -73,14 +67,11 @@ class HistoryServiceTest {
     @Test
     void testFindHistoryById_ExistingId() {
         // Given
-        HistoryEntity entity = new HistoryEntity();
-        entity.setId(1L);
-        entity.setCreationDate(LocalDate.of(2024, 5, 10));
+        HistoryEntity entity = history();
 
-        HistoryDto dto = new HistoryDto();
-        dto.setCreationDate("10-05-2024");
+        HistoryDto dto = historyDto();
 
-        when(historyRepository.findById(1L)).thenReturn(Optional.of(entity));
+        when(historyRepository.findById(anyLong())).thenReturn(Optional.of(entity));
         when(historyMapper.toHistoryDto(entity)).thenReturn(dto);
 
         // When
@@ -88,11 +79,11 @@ class HistoryServiceTest {
 
         // Then
         assertThat(result).isNotNull();
-        assertThat(result.getCreationDate()).isEqualTo("10-05-2024");
+        assertThat(result.getCreationDate()).isEqualTo(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 
         verify(historyRepository).findById(1L);
         verify(historyMapper).toHistoryDto(entity);
     }
 
-    
+
 }

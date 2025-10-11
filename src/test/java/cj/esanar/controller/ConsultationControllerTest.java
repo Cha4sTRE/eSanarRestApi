@@ -87,8 +87,8 @@ class ConsultationControllerTest {
                 .content(objectMapper.writeValueAsString(consultationRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.motive").value("prueba de nueva consulta"))
-                .andExpect(jsonPath("$.serviceDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))))
-                .andExpect(jsonPath("$.finalTime").value(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))));
+                .andExpect(jsonPath("$.serviceDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))))
+                .andExpect(jsonPath("$.finalTime").value(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))));
 
     }
 
@@ -107,8 +107,8 @@ class ConsultationControllerTest {
                         .content(objectMapper.writeValueAsString(consultationRequest)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.motive").value("prueba de actualizar consulta"))
-                .andExpect(jsonPath("$.serviceDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))))
-                .andExpect(jsonPath("$.finalTime").value(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))));
+                .andExpect(jsonPath("$.serviceDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))))
+                .andExpect(jsonPath("$.finalTime").value(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))));
 
     }
 

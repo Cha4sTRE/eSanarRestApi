@@ -51,7 +51,7 @@ class HistoryControllerTest {
         mockMvc.perform(get("/esanar/api/v1/stories/list"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[0].creationDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+                .andExpect(jsonPath("$.[0].creationDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
     }
     @DisplayName("Test para buscar historia por id con GET")
     @Test
@@ -62,7 +62,7 @@ class HistoryControllerTest {
         mockMvc.perform(get("/esanar/api/v1/stories/find/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.creationDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+                .andExpect(jsonPath("$.creationDate").value(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
 
     }
 }

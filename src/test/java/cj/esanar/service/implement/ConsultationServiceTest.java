@@ -1,6 +1,9 @@
 package cj.esanar.service.implement;
 
+import cj.esanar.dataProviders.ConsultationDataProvider;
+import cj.esanar.dataProviders.UserDetailsDataProvider;
 import cj.esanar.persistence.entity.ConsultationEntity;
+import cj.esanar.persistence.entity.HistoryEntity;
 import cj.esanar.persistence.entity.PatientEntity;
 import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.persistence.repository.ConsultationRepository;
@@ -11,6 +14,7 @@ import cj.esanar.service.dtos.in.ConsultationRequest;
 import cj.esanar.service.dtos.in.PatientHistoryRequest;
 import cj.esanar.service.dtos.in.PatientRequest;
 import cj.esanar.service.dtos.out.ConsultationDto;
+import cj.esanar.service.dtos.out.PatientDto;
 import cj.esanar.util.ConsultationMapper;
 import cj.esanar.persistence.entity.enums.*;
 import org.junit.jupiter.api.DisplayName;
@@ -23,9 +27,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import static cj.esanar.dataProviders.ConsultationDataProvider.*;
+import static cj.esanar.dataProviders.PatientsDataProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -40,76 +45,54 @@ class ConsultationServiceTest {
     private UserRepository userRepository;
     @Mock
     private ConsultationMapper consultationMapper;
-    @Mock
-    private Authentication authentication;
-    @Mock
-    private SecurityContext securityContext;
 
     @InjectMocks
     private ConsultationServiceImpl consultationService;
 
     // ----------- TEST: Guardar consulta -----------
-    /*
-    @DisplayName("Test para guardar una consulta")
+    @DisplayName("Test para guardar consulta")
     @Test
     void testSaveConsultation() {
         // Given
+        PatientEntity patientEntity = patient1();
+        ConsultationEntity consultationEntity = consultation();
+        ConsultationDto consultationDto = consultationDto();
+        UserEntity userEntity = UserDetailsDataProvider.userAdmin();
+
+        ConsultationRequest consultationRequest = mock(ConsultationRequest.class);
+        ConsultationHistoryRequest consultationHistoryRequest = mock(ConsultationHistoryRequest.class);
         PatientHistoryRequest patientHistoryRequest = mock(PatientHistoryRequest.class);
-        when(patientHistoryRequest.id()).thenReturn(1L);
 
-        ConsultationRequest request = getConsultationRequest(patientHistoryRequest);
+        // Inicializa el historial del paciente
+        HistoryEntity history = new HistoryEntity();
+        history.setConsultations(new HashSet<>());
+        patientEntity.setHistory(history);
 
-        ConsultationEntity entity = mock(ConsultationEntity.class);
-        ConsultationDto dto = mock(ConsultationDto.class);
-        PatientEntity patient = mock(PatientEntity.class);
-        UserEntity user = mock(UserEntity.class);
-
-        // Mock del contexto de seguridad
+        // Configuración del contexto de seguridad
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(userEntity.getUsername());
+        SecurityContext securityContext = mock(SecurityContext.class);
         when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn("userTest");
         SecurityContextHolder.setContext(securityContext);
 
-        when(consultationMapper.toEntity(request)).thenReturn(entity);
-        when(patientRepository.findById(1L)).thenReturn(Optional.of(patient));
-        when(userRepository.findByUsername("userTest")).thenReturn(Optional.of(user));
-        when(consultationRepository.save(any(ConsultationEntity.class))).thenReturn(entity);
-        when(patientRepository.save(any(PatientEntity.class))).thenReturn(patient);
-        when(consultationMapper.toDto(any(ConsultationEntity.class))).thenReturn(dto);
-
         // When
-        ConsultationDto result = consultationService.saveConsultation(request);
+        when(consultationRequest.history()).thenReturn(consultationHistoryRequest);
+        when(consultationHistoryRequest.patient()).thenReturn(patientHistoryRequest);
+        when(patientHistoryRequest.id()).thenReturn(1L);
+
+        when(consultationMapper.toEntity(consultationRequest)).thenReturn(consultationEntity);
+        when(patientRepository.findById(1L)).thenReturn(Optional.of(patientEntity));
+        when(userRepository.findByUsername(userEntity.getUsername())).thenReturn(Optional.of(userEntity));
+        when(consultationMapper.toDto(consultationEntity)).thenReturn(consultationDto);
+
+        ConsultationDto consultationDtoTest = consultationService.saveConsultation(consultationRequest);
 
         // Then
-        assertThat(result).isNotNull();
-        assertThat(result).isInstanceOf(ConsultationDto.class);
-
-        verify(consultationMapper).toEntity(request);
-        verify(patientRepository).findById(1L);
-        verify(userRepository).findByUsername("userTest");
-        verify(consultationRepository).save(entity);
-        verify(patientRepository).save(patient);
-        verify(consultationMapper).toDto(entity);
+        assertThat(consultationDtoTest).isNotNull();
+        verify(consultationRepository).save(consultationEntity);
+        verify(patientRepository).save(patientEntity);
     }
 
-    private static ConsultationRequest getConsultationRequest(PatientHistoryRequest patientHistoryRequest) {
-        ConsultationHistoryRequest historyRequest = new ConsultationHistoryRequest(patientHistoryRequest);
-        ConsultationRequest request = new ConsultationRequest(
-                historyRequest,
-                "Diagnóstico activo",
-                "Control general",
-                10.0,
-                5.0,
-                "3mm",
-                "Circular",
-                "Sin olor",
-                "Definidos",
-                "Sin infección",
-                "Seroso",
-                "Moderado"
-        );
-        return request;
-    }
-    */
     // ----------- TEST: Listar consultas -----------
     @DisplayName("Test para listar todas las consultas")
     @Test
@@ -152,52 +135,37 @@ class ConsultationServiceTest {
     }
 
     // ----------- TEST: Actualizar consulta -----------
-    /*
     @DisplayName("Test para actualizar una consulta")
     @Test
     void testUpdateConsultation() {
-        // Given
+        Long id= 1L;
+        ConsultationRequest consultationRequest= mock(ConsultationRequest.class);
+        ConsultationHistoryRequest consultationHistoryRequest= mock(ConsultationHistoryRequest.class);
         PatientHistoryRequest patientHistoryRequest = mock(PatientHistoryRequest.class);
-        when(patientHistoryRequest.id()).thenReturn(5L);
+        PatientEntity patientEntity = patient1();
+        ConsultationEntity consultationEntity = consultation();
+        consultationEntity.setId(id);
+        ConsultationDto consultationDto = consultationDto();
+        consultationDto.setId(id);
 
-        ConsultationHistoryRequest historyRequest = new ConsultationHistoryRequest(patientHistoryRequest);
-        ConsultationRequest request = new ConsultationRequest(
-                historyRequest,
-                "Revisión de evolución",
-                "Chequeo general",
-                12.0,
-                8.0,
-                "4mm",
-                "Ovalada",
-                "Olor leve",
-                "Difusos",
-                "Con infección",
-                "Hemático",
-                "Abundante"
-        );
+        HistoryEntity history = new HistoryEntity();
+        history.setConsultations(new HashSet<>());
+        patientEntity.setHistory(history);
 
-        ConsultationEntity entity = mock(ConsultationEntity.class);
-        ConsultationDto dto = mock(ConsultationDto.class);
-        PatientEntity patient = mock(PatientEntity.class);
+        when(consultationMapper.toEntity(consultationRequest)).thenReturn(consultationEntity);
 
-        when(consultationMapper.toEntity(request)).thenReturn(entity);
-        when(patientRepository.findById(5L)).thenReturn(Optional.of(patient));
-        when(patientRepository.save(patient)).thenReturn(patient);
-        when(consultationRepository.save(entity)).thenReturn(entity);
-        when(consultationMapper.toDto(entity)).thenReturn(dto);
+        when(consultationRequest.history()).thenReturn(consultationHistoryRequest);
+        when(consultationHistoryRequest.patient()).thenReturn(patientHistoryRequest);
+        when(patientHistoryRequest.id()).thenReturn(id);
+        when(patientRepository.findById(id)).thenReturn(Optional.of(patientEntity));
+        when(consultationMapper.toDto(consultationEntity)).thenReturn(consultationDto);
 
-        // When
-        ConsultationDto result = consultationService.updateConsultation(request, 10L);
+        ConsultationDto consultationDtoTest= consultationService.updateConsultation(consultationRequest,id);
 
-        // Then
-        assertThat(result).isNotNull();
-        assertThat(result).isInstanceOf(ConsultationDto.class);
-        verify(consultationMapper).toEntity(request);
-        verify(patientRepository).findById(5L);
-        verify(consultationRepository).save(entity);
-        verify(consultationMapper).toDto(entity);
+        assertThat(consultationDtoTest).isNotNull();
+        assertThat(consultationDtoTest).isEqualTo(consultationDto);
+        assertThat(consultationDtoTest.getId()).isEqualTo(id);
     }
-    */
     // ----------- TEST: Eliminar consulta por ID -----------
     @DisplayName("Test para eliminar una consulta por id")
     @Test

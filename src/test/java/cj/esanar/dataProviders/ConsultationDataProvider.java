@@ -55,13 +55,13 @@ public class ConsultationDataProvider {
                 .build();
 
         historyDto = new HistoryDto();
-        historyDto.setCreationDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        historyDto.setCreationDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         historyDto.setConsultations(Collections.emptySet());
         userDto = new UserDto();
         consultationDto = new ConsultationDto();
         consultationDto.setAttendedBy(userDto);
-        consultationDto.setServiceDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        consultationDto.setFinalTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        consultationDto.setServiceDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        consultationDto.setFinalTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
         consultationDto.setPrimaryDiagnosis("diagnostico de prueba");
         consultationHistory = new ConsultationHistoryRequest(new PatientHistoryRequest(1L));
         consultationRequest = new ConsultationRequest(consultationHistory,"Diagnostico de prueba","prueba de nueva consulta",
