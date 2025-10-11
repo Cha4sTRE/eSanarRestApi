@@ -40,7 +40,6 @@ class ConsultationRepositoryTest {
                 .identification(1092524589L)
                 .firstName("jefferson")
                 .lastName("Chaustre")
-                .age(20)
                 .birthDate(LocalDate.of(2004,02,20))
                 .bloodType(BloodType.O_POS)
                 .gender(Gender.Male)

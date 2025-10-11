@@ -8,7 +8,6 @@ import cj.esanar.service.dtos.out.ConsultationDto;
 import cj.esanar.service.dtos.out.HistoryDto;
 import cj.esanar.service.dtos.out.PatientDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

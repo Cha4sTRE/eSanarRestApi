@@ -6,7 +6,6 @@ import cj.esanar.persistence.entity.enums.DocumentType;
 import cj.esanar.persistence.entity.enums.Gender;
 import cj.esanar.persistence.entity.enums.MaritalStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,8 +23,8 @@ public class PatientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String address; //Direccion
-    private String neighborhood; //Barrio
+    private String address;
+    private String neighborhood;
     private int age;
     private String email;
     private String occupation;
