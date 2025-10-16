@@ -1,4 +1,4 @@
-package cj.esanar.config;
+package cj.esanar.config.security;
 
 import cj.esanar.persistence.entity.auth.ERole;
 import cj.esanar.persistence.entity.auth.PermissionEntity;

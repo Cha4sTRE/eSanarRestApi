@@ -2,8 +2,6 @@ package cj.esanar.exception;
 
 import cj.esanar.service.dtos.exceptions.BadRequestDto;
 import cj.esanar.service.dtos.exceptions.ErrorsDto;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,16 +23,11 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.add(new ErrorsDto(fieldName, errorMessage));
+            errors.add(new ErrorsDto(400,fieldName, errorMessage));
         });
         BadRequestDto badRequestException = new BadRequestDto(errors,request.getDescription(false));
         return ResponseEntity.badRequest().body(badRequestException);
     }
 
-    @ExceptionHandler(JWTVerificationException.class)
-    public ResponseEntity<?> handleJWTVerificationException(JWTVerificationException e) {
-        ErrorsDto errorsDto = new ErrorsDto(e.getCause().getMessage(), e.getMessage());
-        return new ResponseEntity<>(errorsDto, HttpStatus.UNAUTHORIZED);
-    }
 
 }
