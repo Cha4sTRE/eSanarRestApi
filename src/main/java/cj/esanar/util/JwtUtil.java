@@ -34,13 +34,13 @@ public class JwtUtil {
                 .withSubject(username)
                 .withClaim("permisos", permisos)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis()+108000000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+10800000))
                 .withJWTId(UUID.randomUUID().toString())
                 .withNotBefore(new Date(System.currentTimeMillis()))
                 .sign(algorithm);
         return token;
     }
-    public DecodedJWT veriffyToken(String token){
+    public DecodedJWT veriffyToken(String token) throws JWTVerificationException {
         try{
 
             Algorithm algorithm=Algorithm.HMAC256(secretKey);

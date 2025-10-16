@@ -10,7 +10,7 @@ import jakarta.validation.constraints.*;
 public record PatientRequest(
 
         @NotBlank(message = "El nombre no puede estar vacío")
-        @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
+        @Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres")
         String firstName,
 
         @NotBlank(message = "El apellido no puede estar vacío")
@@ -20,7 +20,7 @@ public record PatientRequest(
         DocumentType documentType,
 
         @Positive(message = "La identificación debe ser un número positivo")
-        @Digits(integer = 15, fraction = 0, message = "La identificación debe tener máximo 15 dígitos")
+        @Digits(integer = 11, fraction = 0, message = "La identificación debe tener máximo 12 dígitos")
         Long identification,
 
         @Positive(message = "El teléfono debe ser un número positivo")

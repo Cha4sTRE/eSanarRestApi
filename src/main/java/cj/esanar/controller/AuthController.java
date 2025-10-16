@@ -4,6 +4,7 @@ import cj.esanar.service.dtos.in.auth.AuthCreateUserRequest;
 import cj.esanar.service.dtos.in.auth.AuthLoginRequest;
 import cj.esanar.service.dtos.in.auth.AuthResponse;
 import cj.esanar.service.implement.security.UserDetailServiceImpl;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
