@@ -31,8 +31,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     @Override
     public List<ConsultationDto> listConsultations() {
         List<ConsultationEntity> consultation=  consultaRepository.findAll();
-        List<ConsultationDto> consultationDtos= consultationMapper.toDto(consultation);
-        return consultationDtos;
+        return consultationMapper.toDto(consultation);
     }
 
     @Override

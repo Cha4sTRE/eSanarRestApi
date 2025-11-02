@@ -44,9 +44,8 @@ class PatientServiceImplTest {
         when(patientMapper.toPatientDto(any(PatientEntity.class))).thenReturn(dto1());
 
         PatientDto result= patientServiceImpl.savePatients(patientRequest());
-        assertThat(result).isNotNull();
-        assertThat(result).isInstanceOf(PatientDto.class);
-        assertThat(result).isEqualTo(dto1());
+
+        assertThat(result).isNotNull().isInstanceOf(PatientDto.class).isEqualTo(dto1());
         assertThat(result.getIdentification()).isEqualTo(dto1().getIdentification());
 
         verify(patientMapper).toPatient(patientRequest());
@@ -60,7 +59,6 @@ class PatientServiceImplTest {
         //Given
         Pageable pageable = PageRequest.of(0, 3);
         Page<PatientEntity> pagePatient= new PageImpl<>(patientList(),pageable,3);
-        Page<PatientDto> pagePatientDto= new PageImpl<>(patientDtoList(),pageable,3);
 
         //When
         when(patientRepository.findAll(pageable)).thenReturn(pagePatient);
@@ -83,8 +81,7 @@ class PatientServiceImplTest {
         when(patientMapper.toPatientDto(any(PatientEntity.class))).thenReturn(dto1());
 
         PatientDto result= patientServiceImpl.findPatientsById(anyLong());
-        assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(dto1());
+        assertThat(result).isNotNull().isEqualTo(dto1());
 
         verify(patientMapper).toPatientDto(any(PatientEntity.class));
         verify(patientRepository).findById(anyLong());

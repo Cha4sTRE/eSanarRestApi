@@ -25,8 +25,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Page<PatientDto> listPatients(Pageable pageable) {
-        Page<PatientDto> dtoPage= patientRepository.findAll(pageable).map(patientMapper::toPatientDto);
-        return dtoPage;
+        return patientRepository.findAll(pageable).map(patientMapper::toPatientDto);
     }
 
     @Override

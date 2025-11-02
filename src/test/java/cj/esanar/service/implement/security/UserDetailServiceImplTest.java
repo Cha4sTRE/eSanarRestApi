@@ -1,6 +1,5 @@
 package cj.esanar.service.implement.security;
 
-import cj.esanar.persistence.entity.auth.ERole;
 import cj.esanar.persistence.entity.auth.RoleEntity;
 import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.persistence.repository.RoleRepository;
@@ -130,7 +129,7 @@ class UserDetailServiceImplTest {
 
         RoleEntity roleEntity = roleAdmin();
 
-        when(roleRepository.findRoleEntitiesByNameIn(List.of("ADMIN"))).thenReturn(List.of(roleEntity));
+        when(roleRepository.findRoleEntitiesByNameIn(List.of("ADMIN","MEDIC"))).thenReturn(List.of(roleEntity));
         when(passwordEncoder.encode("camila123")).thenReturn("passEncode");
         when(userRepository.save(any(UserEntity.class))).thenAnswer(i -> i.getArgument(0));
         when(jwtUtil.generateToken(any(Authentication.class))).thenReturn("fake-token");
@@ -141,7 +140,7 @@ class UserDetailServiceImplTest {
         assertThat(authResponse.jwt()).isEqualTo("fake-token");
         assertThat(authResponse.message()).isEqualTo("user created");
 
-        verify(roleRepository).findRoleEntitiesByNameIn(List.of(ERole.ADMIN.name()));
+        verify(roleRepository).findRoleEntitiesByNameIn(List.of("ADMIN","MEDIC"));
         verify(userRepository).save(any(UserEntity.class));
         verify(jwtUtil).generateToken(any(Authentication.class));
         verify(passwordEncoder).encode("camila123");

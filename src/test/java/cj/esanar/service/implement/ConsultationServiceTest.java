@@ -1,6 +1,5 @@
 package cj.esanar.service.implement;
 
-import cj.esanar.dataProviders.ConsultationDataProvider;
 import cj.esanar.dataProviders.UserDetailsDataProvider;
 import cj.esanar.persistence.entity.ConsultationEntity;
 import cj.esanar.persistence.entity.HistoryEntity;
@@ -12,11 +11,8 @@ import cj.esanar.persistence.repository.UserRepository;
 import cj.esanar.service.dtos.in.ConsultationHistoryRequest;
 import cj.esanar.service.dtos.in.ConsultationRequest;
 import cj.esanar.service.dtos.in.PatientHistoryRequest;
-import cj.esanar.service.dtos.in.PatientRequest;
 import cj.esanar.service.dtos.out.ConsultationDto;
-import cj.esanar.service.dtos.out.PatientDto;
 import cj.esanar.util.ConsultationMapper;
-import cj.esanar.persistence.entity.enums.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -108,8 +104,7 @@ class ConsultationServiceTest {
         List<ConsultationDto> result = consultationService.listConsultations();
 
         // Then
-        assertThat(result).isNotNull();
-        assertThat(result).hasSize(2);
+        assertThat(result).isNotNull().hasSize(2);
         verify(consultationRepository).findAll();
         verify(consultationMapper).toDto(entityList);
     }
@@ -162,8 +157,7 @@ class ConsultationServiceTest {
 
         ConsultationDto consultationDtoTest= consultationService.updateConsultation(consultationRequest,id);
 
-        assertThat(consultationDtoTest).isNotNull();
-        assertThat(consultationDtoTest).isEqualTo(consultationDto);
+        assertThat(consultationDtoTest).isNotNull().isEqualTo(consultationDto);
         assertThat(consultationDtoTest.getId()).isEqualTo(id);
     }
     // ----------- TEST: Eliminar consulta por ID -----------

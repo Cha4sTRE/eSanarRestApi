@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @ActiveProfiles("test")
-public class PermissionsRepositoryTest {
+class PermissionsRepositoryTest {
 
     @Autowired
     private PermissionsRepository permissionsRepository;
