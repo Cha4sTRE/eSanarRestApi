@@ -1,9 +1,6 @@
 package cj.esanar.service.dtos.out;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.time.LocalDate;
 
 @Data
 public class PatientDto {
