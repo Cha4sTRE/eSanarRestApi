@@ -16,11 +16,11 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex,
+    public ResponseEntity<BadRequestDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex,
                                                                    WebRequest request) {
 
         List<ErrorsDto> errors = new ArrayList<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.add(new ErrorsDto(400,fieldName, errorMessage));

@@ -20,14 +20,14 @@ public class ConsultationController {
     private final ConsultationService consultationService;
 
     @GetMapping("/list")
-    @PreAuthorize("hasAnyRole('ENF','MEDIC','VISITOR','ADMIN')")
+    @PreAuthorize("hasAnyRole('ENF','MEDIC','ADMIN')")
     public ResponseEntity<List<ConsultationDto>> findAllConsultations(){
         List<ConsultationDto> consultationDtos= consultationService.listConsultations();
         return new ResponseEntity<>(consultationDtos, HttpStatus.OK);
     }
 
     @GetMapping("/consultation/{id}")
-    @PreAuthorize("hasAnyRole('ENF','MEDIC','VISITOR','ADMIN')")
+    @PreAuthorize("hasAnyRole('ENF','MEDIC','ADMIN')")
     public ResponseEntity<ConsultationDto> findConsultationById(@PathVariable Long id){
         ConsultationDto consultationDto= consultationService.findConsultationById(id);
         return new ResponseEntity<>(consultationDto, HttpStatus.OK);

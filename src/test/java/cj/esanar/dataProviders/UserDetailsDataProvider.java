@@ -41,7 +41,7 @@ public class UserDetailsDataProvider {
                 .isAccountNonLocked(true)
                 .build();
         createUserRequest= new AuthCreateUserRequest("Luz","Angelica","angelica@gmail.com",
-                109584652L,32564856L,"angelica","camila123",new AuthCreateRoleRequest(List.of("ADMIN")));
+                109584652L,32564856L,"angelica","camila123",new AuthCreateRoleRequest(List.of("ADMIN","MEDIC")));
     }
     public static UserEntity userAdmin(){
         return userAdmin;

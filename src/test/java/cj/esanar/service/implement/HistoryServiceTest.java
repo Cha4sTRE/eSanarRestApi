@@ -54,9 +54,8 @@ class HistoryServiceTest {
         List<HistoryDto> result = historyService.listHistory();
 
         // Then
-        assertThat(result).isNotNull();
-        assertThat(result).hasSize(2);
-        assertThat(result.get(0).getCreationDate()).isEqualTo(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        assertThat(result).isNotNull().hasSize(2);
+        assertThat(result.getFirst().getCreationDate()).isEqualTo(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 
         verify(historyRepository).findAll();
         verify(historyMapper).toHistoryDto(entityList);

@@ -4,8 +4,8 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: ${DB_USER:enfsanar}
-    password: ${DB_PASSWORD:enf123}
+    username: ${DB_USER:jeffer}
+    password: ${DB_PASSWORD:" "}
     url: ${DB_URL:jdbc:postgresql://localhost:5432/enf_sanar}
   jpa:
     properties:

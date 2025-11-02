@@ -1,5 +1,8 @@
 package cj.esanar.service.dtos.in.auth;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -9,5 +12,5 @@ import java.util.List;
 * registrar un nuevo usuario en el endPoint Post
 * */
 public record AuthCreateRoleRequest(
-        @Size(max = 3,message = "Limite Alcanzado") List<String> roleList)
+        @NotNull @NotEmpty @Size(max = 3,message = "Limite Alcanzado") List< @NotBlank String> roleList)
 {}

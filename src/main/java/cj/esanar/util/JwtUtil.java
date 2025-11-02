@@ -29,7 +29,7 @@ public class JwtUtil {
         String username=authentication.getName();
         String permisos= authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
-        String token= JWT.create()
+        return JWT.create()
                 .withIssuer(this.userGenerator)
                 .withSubject(username)
                 .withClaim("permisos", permisos)
@@ -38,22 +38,20 @@ public class JwtUtil {
                 .withJWTId(UUID.randomUUID().toString())
                 .withNotBefore(new Date(System.currentTimeMillis()))
                 .sign(algorithm);
-        return token;
     }
     public DecodedJWT veriffyToken(String token) throws JWTVerificationException {
         try{
 
             Algorithm algorithm=Algorithm.HMAC256(secretKey);
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(this.userGenerator).build();
-            DecodedJWT jwt=verifier.verify(token);
-            return jwt;
+            return verifier.verify(token);
 
         }catch (JWTVerificationException e){
             throw new JWTVerificationException(e.getMessage());
         }
     }
     public String getUsernameFromToken(DecodedJWT decodedJWT){
-        return decodedJWT.getSubject().toString();
+        return decodedJWT.getSubject();
     }
     public Claim getSpecificClaim(DecodedJWT decodedJWT,String claimName){
         return decodedJWT.getClaim(claimName);
