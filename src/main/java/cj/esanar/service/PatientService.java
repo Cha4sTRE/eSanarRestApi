@@ -1,6 +1,5 @@
 package cj.esanar.service;
 
-import cj.esanar.persistence.entity.PatientEntity;
 import cj.esanar.service.dtos.in.PatientRequest;
 import cj.esanar.service.dtos.out.PatientDto;
 import org.springframework.data.domain.Page;

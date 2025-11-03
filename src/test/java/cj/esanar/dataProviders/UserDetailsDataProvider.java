@@ -6,6 +6,7 @@ import cj.esanar.persistence.entity.auth.RoleEntity;
 import cj.esanar.persistence.entity.auth.UserEntity;
 import cj.esanar.service.dtos.in.auth.AuthCreateRoleRequest;
 import cj.esanar.service.dtos.in.auth.AuthCreateUserRequest;
+import cj.esanar.service.dtos.out.UsersDto;
 
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class UserDetailsDataProvider {
     private static PermissionEntity delete;
     private static RoleEntity admin;
     private static UserEntity userAdmin;
+    private static UsersDto userDtoAdmin;
     private static AuthCreateUserRequest  createUserRequest;
 
     static{
@@ -27,6 +29,7 @@ public class UserDetailsDataProvider {
         delete= PermissionEntity.builder().name("DELETE").build();
         admin= RoleEntity.builder().name(ERole.ADMIN).listaPermisos(Set.of(create,read,update,delete)).build();
         userAdmin= UserEntity.builder()
+                .id(1L)
                 .name("Jefferson")
                 .lastName("Chaustre")
                 .username("jeffer")
@@ -42,10 +45,18 @@ public class UserDetailsDataProvider {
                 .build();
         createUserRequest= new AuthCreateUserRequest("Luz","Angelica","angelica@gmail.com",
                 109584652L,32564856L,"angelica","camila123",new AuthCreateRoleRequest(List.of("ADMIN","MEDIC")));
+        userDtoAdmin=new UsersDto();
+        userDtoAdmin.setId(1L);
+        userDtoAdmin.setName("Jefferson");
+        userDtoAdmin.setLastName("Chaustre");
+        userDtoAdmin.setUsername("jeffer");
+        userDtoAdmin.setEmail("chaustrejefferson@gmail.com");
+        userDtoAdmin.setRolesName(List.of("ADMIN"));
     }
     public static UserEntity userAdmin(){
         return userAdmin;
     }
     public static RoleEntity roleAdmin(){return admin;}
     public static AuthCreateUserRequest createUserRequest(){return createUserRequest;}
+    public static UsersDto userDtoAdmin(){return userDtoAdmin;}
 }

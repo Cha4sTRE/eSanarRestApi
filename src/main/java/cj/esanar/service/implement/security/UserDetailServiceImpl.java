@@ -123,5 +123,44 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return authResponse;
 
     }
+    public AuthResponse updateUser(@Valid AuthCreateUserRequest createUserRequest,long id){
+
+        String name= createUserRequest.name();
+        String lastName= createUserRequest.lastName();
+        String email= createUserRequest.email();
+        Long phone= createUserRequest.phone();
+        Long identifier= createUserRequest.identifier();
+        String username= createUserRequest.username();
+        String password= createUserRequest.password();
+        List<String> roleList= createUserRequest.roleRequest().roleList();
+
+        Set<RoleEntity> roleEntities= roleRepository.findRoleEntitiesByNameIn(roleList).stream().collect(Collectors.toSet());
+        UserEntity userUpdate= userRepository.findById(id).orElse(null);
+
+        userUpdate.setName(name);
+        userUpdate.setLastName(lastName);
+        userUpdate.setEmail(email);
+        userUpdate.setPhoneNumber(phone);
+        userUpdate.setIdentifier(identifier);
+        userUpdate.setUsername(username);
+        userUpdate.setPassword(passwordEncoder.encode(password));
+        userUpdate.setRoles(roleEntities);
+        userRepository.save(userUpdate);
+
+        UserEntity usuarioEntity= userRepository.save(userUpdate);
+        List<SimpleGrantedAuthority> authorityList= new ArrayList<>();
+
+        usuarioEntity.getRoles().stream().forEach(role->
+                authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getName().name()))));
+
+        usuarioEntity.getRoles().stream().flatMap(role->role.getListaPermisos().stream())
+                .forEach(permission->authorityList.add(new SimpleGrantedAuthority(permission.getName())));
+
+        Authentication authentication= new UsernamePasswordAuthenticationToken(usuarioEntity,null,authorityList);
+        String accessToken= jwtUtil.generateToken(authentication);
+        AuthResponse authResponse= new AuthResponse(username,"user update",accessToken,true);
+        return authResponse;
+
+    }
 
 }
