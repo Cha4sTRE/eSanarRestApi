@@ -147,4 +147,25 @@ class UserDetailServiceImplTest {
 
 
     }
+
+    @DisplayName("Test para el metodo de actualizar usuario")
+    @Test
+    void testUpdateUser() {
+
+        RoleEntity roleEntity = roleAdmin();
+
+        when(roleRepository.findRoleEntitiesByNameIn(List.of("ADMIN","MEDIC"))).thenReturn(List.of(roleEntity));
+        when(passwordEncoder.encode("camila123")).thenReturn("passEncode");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(userAdmin()));
+        when(userRepository.save(any(UserEntity.class))).thenAnswer(i -> i.getArgument(0));
+        when(jwtUtil.generateToken(any(Authentication.class))).thenReturn("fake-token");
+
+        AuthResponse authResponse = userDetailServiceImpl.updateUser(createUserRequest(),1L);
+        assertThat(authResponse).isNotNull();
+        assertThat(authResponse.username()).isEqualTo(createUserRequest().username());
+        assertThat(authResponse.jwt()).isEqualTo("fake-token");
+        assertThat(authResponse.message()).isEqualTo("user update");
+
+
+    }
 }

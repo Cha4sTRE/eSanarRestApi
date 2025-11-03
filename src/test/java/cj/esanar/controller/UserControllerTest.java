@@ -4,7 +4,6 @@ import cj.esanar.service.UserService;
 import cj.esanar.service.dtos.in.auth.AuthCreateUserRequest;
 import cj.esanar.service.dtos.in.auth.AuthResponse;
 import cj.esanar.service.dtos.out.UsersDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,6 +57,7 @@ class UserControllerTest {
 
     }
 
+    @DisplayName("Test para obtener usuario por id con Get")
     @Test
     void findUserById() throws Exception {
 
@@ -70,7 +70,7 @@ class UserControllerTest {
 
 
     }
-
+    @DisplayName("Test para obtener usuario por username con Get")
     @Test
     void testFindUserById() throws Exception {
 
@@ -84,7 +84,7 @@ class UserControllerTest {
 
 
     }
-
+    @DisplayName("Test para actualizar usuario por con PUT")
     @Test
     void updateUser() throws Exception {
 
