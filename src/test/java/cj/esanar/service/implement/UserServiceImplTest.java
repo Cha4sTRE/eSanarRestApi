@@ -7,6 +7,7 @@ import cj.esanar.service.dtos.in.auth.AuthResponse;
 import cj.esanar.service.dtos.out.UsersDto;
 import cj.esanar.service.implement.security.UserDetailServiceImpl;
 import cj.esanar.util.UsersMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,8 +37,9 @@ class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
+    @DisplayName("Test para buscar lista de usuarios")
     @Test
-    void listUsers() {
+    void testListUsers() {
 
         List<UserEntity> userList= List.of(userAdmin(),userAdmin(),userAdmin());
         List<UsersDto> userDtoList= List.of(userDtoAdmin(),userDtoAdmin(),userDtoAdmin());
@@ -52,8 +54,9 @@ class UserServiceImplTest {
 
     }
 
+    @DisplayName("Test para buscar usuario por id")
     @Test
-    void getUserById() {
+    void testGetUserById() {
 
         UsersDto admin=userDtoAdmin();
         UserEntity userEntity=userAdmin();
@@ -69,8 +72,9 @@ class UserServiceImplTest {
 
     }
 
+    @DisplayName("Test para buscar usuario por usernname")
     @Test
-    void getUserByUsername() {
+    void testGetUserByUsername() {
 
         UsersDto admin=userDtoAdmin();
         UserEntity userEntity=userAdmin();
@@ -85,8 +89,9 @@ class UserServiceImplTest {
 
     }
 
+    @DisplayName("Test para actualizar usuario")
     @Test
-    void updateUser() {
+    void testUpdateUser() {
 
         AuthCreateUserRequest authCreateUserRequest= createUserRequest();
         AuthResponse authResponse= new AuthResponse("angelica","user update","fake-token",true);
