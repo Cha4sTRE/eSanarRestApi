@@ -43,8 +43,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthResponse updateUser(AuthCreateUserRequest authCreateUserRequest,long id) {
-        AuthResponse authResponse= userDetailService.updateUser(authCreateUserRequest,id);
-        UserEntity userEntity = usersMapper.toUserEntity(authCreateUserRequest);
-        return authResponse;
+        return userDetailService.updateUser(authCreateUserRequest,id);
     }
 }
