@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/TU-REPO'
+                git branch: 'master', url: 'https://github.com/Cha4sTRE/eSanarRestApi.git'
             }
         }
 

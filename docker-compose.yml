@@ -1,10 +1,36 @@
 services:
-  database:
-    container_name: enf-db
+  db:
     image: postgres
-    ports:
-      - 5433:5432
+    container_name: enf_db
+    restart: always
     environment:
-      - POSTGRES_USER=enfsanar
-      - POSTGRES_PASSWORD=enf123
-      - POSTGRES_DB=enf_sanar
+      POSTGRES_DB: enf-sanar
+      POSTGRES_USER: enf123
+      POSTGRES_PASSWORD: sanar123
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    networks:
+      - sanar_net
+
+  app:
+    image: j3ffer/myapp:latest   # <--- esta la construyes y subes desde Jenkins
+    container_name: esanar-api
+    restart: always
+    depends_on:
+      - enf_db
+    environment:
+      DB_URL: jdbc:postgresql://enf_db:5432/enf-sanar
+      DB_USER: myuser
+      DB_PASSWORD: superpass123
+      JWT_KEY: df077d8f28a73a9350111cf6832caf1d1a03353748f1ed02e2d1d91dae7ff121_
+      JWT_USER: restSanarJWT
+    networks:
+      - sanar_net
+    ports:
+      - "80:8080"  # Expones la API hacia internet
+
+volumes:
+  enf_db:
+
+networks:
+  sanar_net:
