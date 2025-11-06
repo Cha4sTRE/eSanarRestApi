@@ -28,7 +28,15 @@ services:
       - sanar_net
     ports:
       - "80:8080"  # Expones la API hacia internet
-
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 60 --cleanup
+    # --interval 60 => revisa cada 60s si hay nuevas versiones
+    # --cleanup => borra imágenes viejas automáticamente
 volumes:
   enf_db:
 
