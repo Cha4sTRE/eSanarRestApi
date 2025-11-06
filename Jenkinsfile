@@ -16,7 +16,7 @@ pipeline {
 
         stage('Test & Build JAR') {
             steps {
-                sh "mvn clean package"
+                sh "./mvnw clean package"
             }
         }
 
