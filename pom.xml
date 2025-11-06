@@ -155,10 +155,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>cj.esanar.ESanarRestApiApplication</mainClass>
-                    <layout>JAR</layout>
-                </configuration>
+                <version>3.2.0</version> <!-- o la que uses -->
                 <executions>
                     <execution>
                         <goals>
