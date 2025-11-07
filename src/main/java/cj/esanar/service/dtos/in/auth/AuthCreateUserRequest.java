@@ -5,9 +5,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
-/*
-* dto para crear un nuevo usuario en el registro con el metodo Post
-* */
 public record AuthCreateUserRequest(
         @NotBlank String name,
         @NotBlank String lastName,
