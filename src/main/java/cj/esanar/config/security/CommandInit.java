@@ -17,7 +17,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CommandInit {
 
-    @Bean
+    //@Bean
     CommandLineRunner init(PasswordEncoder passwordEncoder, UserRepository userRepository){
         return args -> {
             PermissionEntity created= PermissionEntity.builder().name("CREATE").build();
