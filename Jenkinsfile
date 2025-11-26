@@ -16,7 +16,7 @@ pipeline {
 
         stage('Test & Build JAR') {
             steps {
-                sh "./mvnw clean package"
+                sh "./mvnw clean install"
             }
         }
 
@@ -39,5 +39,23 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to CapRover') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'captain-id',
+                    usernameVariable: 'CAPROVER_USER',
+                    passwordVariable: 'CAPROVER_PASS'
+                )]) {
+                    sh """
+                        caprover deploy \
+                            --host https://captain.projects.20022004.xyz \
+                            --appName sanar-api \
+                            --imageName j3ffer/esanar-api:latest \
+                            --password $CAPROVER_PASS
+                    """
+                }
+            }
+        }
+
     }
 }
