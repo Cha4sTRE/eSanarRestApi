@@ -44,8 +44,9 @@ pipeline {
                 withCredentials([string(credentialsId: 'captain-id', variable: 'captain-id')]) {
                     sh '''
                         caprover deploy \
-                        --host https://captain.projects.20022004.xyz \
-                        --appName sanar-api \
+                        --default \
+                        --caproverUrl https://captain.projects.20022004.xyz \
+                        --caproverApp sanar-api \
                         --imageName j3ffer/esanar-api:latest \
                         --appToken $captain-id
                     '''
