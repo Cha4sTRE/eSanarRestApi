@@ -47,7 +47,7 @@ pipeline {
                         --host https://captain.projects.20022004.xyz \
                         --appName sanar-api \
                         --imageName j3ffer/esanar-api:latest \
-                        --token $captain-id
+                        --appToken $captain-id
                     '''
                 }
             }
