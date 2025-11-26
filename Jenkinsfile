@@ -45,7 +45,7 @@ pipeline {
                     sh '''
                         caprover deploy \
                         --default \
-                        --caproverUrl https://captain.projects.20022004.xyz \
+                        --caproverUrl https://sanar-api.projects.20022004.xyz \
                         --caproverApp sanar-api \
                         --imageName j3ffer/esanar-api:latest \
                         --appToken $captain-id
