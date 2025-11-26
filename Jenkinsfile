@@ -41,17 +41,13 @@ pipeline {
         }
         stage('Deploy to CapRover') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'captain-id',
-                    usernameVariable: 'CAPROVER_USER',
-                    passwordVariable: 'CAPROVER_PASS'
-                )]) {
+                withCredentials([string(credentialsId: 'captain-id', variable: 'captain-id')]) {
                     sh """
                         caprover deploy \
-                            --host https://captain.projects.20022004.xyz \
-                            --appName sanar-api \
-                            --imageName j3ffer/esanar-api:latest \
-                            --password $CAPROVER_PASS
+                        --host https://captain.projects.20022004.xyz \
+                        --appName sanar-api \
+                        --imageName j3ffer/esanar-api:latest \
+                        --token $captain-id
                     """
                 }
             }
