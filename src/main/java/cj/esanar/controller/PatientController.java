@@ -21,7 +21,7 @@ public class PatientController {
 
     private final PatientService patientService;
 
-    @GetMapping("/list123")
+    @GetMapping("/list")
     @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<Page<PatientDto>> listPatients(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
                                                        @RequestParam(name = "size",defaultValue = "3") int pageSize) {

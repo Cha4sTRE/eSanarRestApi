@@ -20,7 +20,7 @@ public class AuthController {
 
     private final UserDetailServiceImpl userDetailService;
 
-    @PostMapping("/login123")
+    @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest loginRequest) {
         return new ResponseEntity<>(userDetailService.loginUser(loginRequest), HttpStatus.OK);
     }
