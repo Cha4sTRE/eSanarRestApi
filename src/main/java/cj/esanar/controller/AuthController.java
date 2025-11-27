@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/esanar/api/v1/auth")
+@RequestMapping("/esanar/api/v/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final UserDetailServiceImpl userDetailService;
 
-    @PostMapping("/login")
+    @PostMapping("/login123")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest loginRequest) {
         return new ResponseEntity<>(userDetailService.loginUser(loginRequest), HttpStatus.OK);
     }
